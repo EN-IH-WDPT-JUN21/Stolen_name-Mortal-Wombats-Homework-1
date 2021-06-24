@@ -69,3 +69,5 @@ Optional Achievements
 
 Export party into an importable CSV file.
 Simulate whole party fights with one command by choosing random fighters on each side and make them duel until one party is wiped out.
+
+Test of branching
