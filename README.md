@@ -1,4 +1,4 @@
-<img width=“964” alt=“our cool logo” src=“https://github.com/EN-IH-WDPT-JUN21/Stolen_name-Mortal-Wombats-Homework-1/blob/master/logo_mortal_wombats-01.svg">
+<img src="https://github.com/EN-IH-WDPT-JUN21/Stolen_name-Mortal-Wombats-Homework-1/blob/master/logo_mortal_wombats-01.svg">
 
 Introduction
 
