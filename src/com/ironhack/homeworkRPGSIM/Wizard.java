@@ -4,6 +4,14 @@ public class Wizard extends Character implements Attacker{
 
     private int mana;
     private int intelligence;
+    // Setting Variables for Max and Min Stats
+
+    final int MAXINTELLIGENCE = 50;
+    final int MAXMANA = 50;
+    final int MAXHP = 100;
+    final int MININTELLIGENCE = 1;
+    final int MINMANA = 10;
+    final int MINHP = 50;
 
     public Wizard(int id, String name, int hp, int mana, int intelligence) {
         super(id, name, hp);
@@ -22,12 +30,14 @@ public class Wizard extends Character implements Attacker{
     }
 
     public void setHp(int hp){
-        if(hp < 50){
-            System.out.println("hp for Wizards must be 50 or more, setting hp for this character to 50");
-            this.hp = 50;
-        } else if(hp > 100){
-            System.out.println("hp for Wizards cannot be more than 100, setting hp for this character to 100");
-            this.hp = 100;
+        if(hp < MINHP){
+            System.out.println("hp for Wizards must be "+ MAXHP +" or more, setting hp for this character to "
+                    + MAXHP);
+            this.hp = MINHP;
+        } else if(hp > MAXHP){
+            System.out.println("hp for Wizards cannot be more than " + MAXHP +", setting hp for this character to " +
+                    MAXHP);
+            this.hp = MAXHP;
         } else {
             this.hp = hp;
         }
@@ -36,12 +46,14 @@ public class Wizard extends Character implements Attacker{
 
 
     public void setMana(int mana) {
-        if(mana < 10){
-            System.out.println("mana must be 10 or more, setting mana for this character to 10");
-            this.mana = 10;
-        } else if(mana >50){
-            System.out.println("mana cannot be more than 50, setting mana for this character to 50");
-            this.mana = 50;
+        if(mana < MINMANA){
+            System.out.println("mana must be " + MINMANA +" or more, setting mana for this character to " +
+                    MINMANA);
+            this.mana = MINMANA;
+        } else if(mana >MAXMANA){
+            System.out.println("mana cannot be more than " + MAXMANA +", setting mana for this character to "
+                    + MAXMANA);
+            this.mana = MAXMANA;
         } else {
             this.mana = mana;
         }
@@ -49,12 +61,14 @@ public class Wizard extends Character implements Attacker{
 
     public void setIntelligence(int intelligence) {
 
-        if(intelligence < 1){
-            System.out.println("intelligence must be 1 or more, setting intelligence for this character to 1");
-            this.intelligence = 1;
-        } else if(intelligence >50){
-            System.out.println("intelligence cannot be more than 50, setting intelligence for this character to 50");
-            this.intelligence = 50;
+        if(intelligence < MININTELLIGENCE){
+            System.out.println("intelligence must be " + MININTELLIGENCE +" or more, setting intelligence for this " +
+                    "character to " + MININTELLIGENCE);
+            this.intelligence = MININTELLIGENCE;
+        } else if(intelligence >MAXINTELLIGENCE){
+            System.out.println("intelligence cannot be more than " + MAXINTELLIGENCE +", setting intelligence for this " +
+                    "character to " + MAXINTELLIGENCE);
+            this.intelligence = MAXINTELLIGENCE;
         } else {
             this.intelligence = intelligence;
         }
@@ -80,7 +94,7 @@ public class Wizard extends Character implements Attacker{
 
     @Override
     public String toString() {
-         return "Id: " + this.getId() +" Wizard name: " + this.getName() +
+        return "Id: " + this.getId() +" Wizard name: " + this.getName() +
                 ", hp: " + this.getHp();
     }
 }

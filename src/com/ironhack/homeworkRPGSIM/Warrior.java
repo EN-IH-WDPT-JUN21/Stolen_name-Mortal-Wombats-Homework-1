@@ -5,6 +5,16 @@ public class Warrior extends Character implements Attacker{
     private int stamina;
     private int strength;
 
+    // Max & Min Values for Stamina,Strength and HP
+    final int MAXSTAMINA = 50;
+    final int MAXSTRENGTH = 10;
+    final int MAXHP = 200;
+    final int MINSTAMINA = 10;
+    final int MINSTRENGTH = 1;
+    final int MINHP = 100;
+
+
+
     public Warrior(int id, String name, int hp, int stamina, int strength) {
         super(id, name, hp);
         setStamina(stamina);
@@ -23,12 +33,14 @@ public class Warrior extends Character implements Attacker{
     }
 
     public void setHp(int hp){
-        if(hp < 100){
-            System.out.println("hp for Warriors must be 100 or more, setting hp for this character to 100");
-            this.hp = 100;
-        } else if(hp > 200){
-            System.out.println("hp for Warriors cannot be more than 200, setting hp for this character to 200");
-            this.hp = 200;
+        if(hp < MINHP){
+            System.out.println("hp for Warriors must be " +MINHP +" or more, setting hp for this character to "
+                    + MINHP);
+            this.hp = MINHP;
+        } else if(hp > MAXHP){
+            System.out.println("hp for Warriors cannot be more than " + MAXHP +", setting hp for this character to" +
+                    MAXHP);
+            this.hp = MAXHP;
         } else {
             this.hp = hp;
         }
@@ -36,12 +48,14 @@ public class Warrior extends Character implements Attacker{
     }
 
     public void setStamina(int stamina) {
-        if(stamina < 10){
-            System.out.println("Stamina must be 10 or more, setting Stamina for this character to 10");
-            this.stamina = 10;
-        } else if(stamina >50){
-            System.out.println("Stamina cannot be more than 50, setting Stamina for this character to 50");
-            this.stamina = 50;
+        if(stamina < MINSTAMINA){
+            System.out.println("Stamina must be "+ MINSTAMINA +" or more, setting Stamina for this character to "+
+                    MINSTAMINA);
+            this.stamina = MINSTAMINA;
+        } else if(stamina >MAXSTAMINA){
+            System.out.println("Stamina cannot be more than "+ MAXSTAMINA + ", setting Stamina for this character to " +
+                    + MAXSTAMINA);
+            this.stamina = MAXSTAMINA;
         } else {
             this.stamina = stamina;
         }
@@ -49,12 +63,14 @@ public class Warrior extends Character implements Attacker{
 
     public void setStrength(int strength) {
 
-        if(strength < 1){
-            System.out.println("Strength must be 1 or more, setting Strength for this character to 1");
-            this.strength = 1;
-        } else if(strength >10){
-            System.out.println("Strength cannot be more than 10, setting Strength for this character to 10");
-            this.strength = 10;
+        if(strength < MINSTRENGTH){
+            System.out.println("Strength must be " + MINSTRENGTH +" or more, setting Strength for this character to "
+                    + MINSTRENGTH);
+            this.strength = MINSTRENGTH;
+        } else if(strength >MAXSTRENGTH){
+            System.out.println("Strength cannot be more than " + MAXSTRENGTH + ", setting Strength for this character" +
+                    " to " + MAXSTRENGTH);
+            this.strength = MAXSTRENGTH;
         } else {
             this.strength = strength;
         }
