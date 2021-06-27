@@ -25,6 +25,14 @@ public class Wizard extends Character implements Attacker{
                 " a mana pool of " + getMana() + " and an intelligence of " + getIntelligence());
     }
 
+    public Wizard() {
+
+    }
+
+    public Wizard(int id) {
+        setId(id);
+    }
+
     public int getMana() {
         return mana;
     }
