@@ -2,7 +2,7 @@ package com.ironhack.homeworkRPGSIM;
 
 public class UniqueID {
 
-    private Integer uniqueID = 0;
+    static Integer uniqueID = 0;
 
     public Integer generateID() {
         uniqueID++;
@@ -12,6 +12,5 @@ public class UniqueID {
     public UniqueID() {
 
     }
-
 
 }

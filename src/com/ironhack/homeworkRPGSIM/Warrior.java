@@ -18,8 +18,8 @@ public class Warrior extends Character implements Attacker {
     final int MINHP = 100;
 
 
-    public Warrior(int id, String name, int hp, int stamina, int strength) {
-        super(id, name, hp);
+    public Warrior(String name, int hp, int stamina, int strength) {
+        super(name, hp);
         setStamina(stamina);
         setStrength(strength);
 
@@ -31,9 +31,6 @@ public class Warrior extends Character implements Attacker {
 
     }
 
-    public Warrior(int id) {
-        setId(id);
-    }
 
     public int getStamina() {
         return stamina;
@@ -116,52 +113,56 @@ public class Warrior extends Character implements Attacker {
                 '}';
     }
 
-    public Warrior createWarrior(Warrior warrior) {
+    // This method can be called when we want the user to input the warriors details.
+    // We would need to create a warrior object first
+    public void customiseWarrior() {
         boolean validName = false;
         boolean validHp = false;
         boolean validStrength = false;
         boolean validStamina = false;
 
         System.out.println("Give your Warrior a name:> ");
+
         while (!validName) {
             try {
-                warrior.setName(scan.next());
+                setName(scan.next());
                 validName = true;
             } catch (Exception er) {
                 System.out.println("Please input a valid name: ");
                 scan.next();
             }
         }
-        System.out.println("Set " + warrior.getName() + "'s starting health:> ");
+        System.out.println("Set " + getName() + "'s starting health:> ");
         while (!validHp) {
             try {
-                warrior.setHp(scan.nextInt());
+                setHp(scan.nextInt());
                 validHp = true;
             } catch (Exception er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
         }
-        System.out.println("set "+ warrior.getName() + "'s starting stamina:> ");
+        System.out.println("set "+ getName() + "'s starting stamina:> ");
         while (!validStamina) {
             try {
-                warrior.setStamina(scan.nextInt());
+                setStamina(scan.nextInt());
                 validStamina = true;
             } catch (Exception er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
         }
-        System.out.println("Set "+ warrior.getName() + "'s strength:> ");
+        System.out.println("Set "+ getName() + "'s strength:> ");
         while (!validStrength) {
             try {
-                warrior.setStrength(scan.nextInt());
+                setStrength(scan.nextInt());
                 validStrength = true;
             } catch (Exception er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
         }
-        return warrior;
+        System.out.println("Brave new Warrior " + getName() + " joins the party, they have a hp of " + getHp() +
+                " a stamina of " + getStamina() + " and a strength of " + getStrength());
     }
 }

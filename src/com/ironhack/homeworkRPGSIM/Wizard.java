@@ -17,8 +17,8 @@ public class Wizard extends Character implements Attacker{
     final int MINMANA = 10;
     final int MINHP = 50;
 
-    public Wizard(int id, String name, int hp, int mana, int intelligence) {
-        super(id, name, hp);
+    public Wizard(String name, int hp, int mana, int intelligence) {
+        super(name, hp);
         setMana(mana);
         setIntelligence(intelligence);
         System.out.println("Wise old Wizard " + name + " joins the party, they have a hp of " + getHp() +
@@ -27,10 +27,6 @@ public class Wizard extends Character implements Attacker{
 
     public Wizard() {
 
-    }
-
-    public Wizard(int id) {
-        setId(id);
     }
 
     public int getMana() {
@@ -110,7 +106,7 @@ public class Wizard extends Character implements Attacker{
                 ", hp: " + this.getHp();
     }
 
-    public Wizard createWizard(Wizard wizard) {
+    public void customiseWizard() {
         boolean validName = false;
         boolean validHp = false;
         boolean validMana = false;
@@ -119,43 +115,44 @@ public class Wizard extends Character implements Attacker{
         System.out.println("Give your Wizards a name:> ");
         while (!validName) {
             try {
-                wizard.setName(scan.next());
+                setName(scan.next());
                 validName = true;
             } catch (Exception er) {
                 System.out.println("Please input a valid name: ");
                 scan.next();
             }
         }
-        System.out.println("Set "+ wizard.getName() + "'s starting health:> ");
+        System.out.println("Set "+ getName() + "'s starting health:> ");
         while (!validHp) {
             try {
-                wizard.setHp(scan.nextInt());
+                setHp(scan.nextInt());
                 validHp = true;
             } catch (Exception er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
         }
-        System.out.println("set "+ wizard.getName() + "'s starting mana:> ");
+        System.out.println("set "+ getName() + "'s starting mana:> ");
         while (!validMana) {
             try {
-                wizard.setMana(scan.nextInt());
+                setMana(scan.nextInt());
                 validMana = true;
             } catch (Exception er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
         }
-        System.out.println("Set " + wizard.getName() + "'s intelligence:> ");
+        System.out.println("Set " + getName() + "'s intelligence:> ");
         while (!validIntelligence) {
             try {
-                wizard.setIntelligence(scan.nextInt());
+                setIntelligence(scan.nextInt());
                 validIntelligence = true;
             } catch (Exception er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
         }
-        return wizard;
+        System.out.println("Wise old Wizard " + getName() + " joins the party, they have a hp of " + getHp() +
+                " a mana pool of " + getMana() + " and an intelligence of " + getIntelligence());
     }
 }

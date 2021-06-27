@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class Main {
 
+
     public static void main(String[] args) {
 
         UniqueID id = new UniqueID();
@@ -17,20 +18,21 @@ public class Main {
         HashMap<Integer, Character> party2 = new HashMap<>();
         HashMap<Integer, Character> graveyard = new HashMap<>();
 
-        Warrior testwar = new Warrior(id.generateID());
+        MainMenu.mainMenu();
 
-        testwar.createWarrior(testwar);
+        //Warrior testwar = new Warrior();
 
-        System.out.println(testwar.toString());
+        //testwar.customiseWarrior();
 
-        Warrior warrior1 = new Warrior(id.generateID(),"Jeff Jefferson", 200, 200, 200);
-        party1.put(warrior1.getId(),warrior1);
+        //System.out.println(testwar);
+
+        Warrior warrior1 = new Warrior("Jeff Jefferson", 200, 200, 200);
+        party1.put(warrior1.getId(), warrior1);
         //warrior1.attack();
 
-        System.out.println(warrior1.getId());
 
-        Wizard wizard1 = new Wizard(id.generateID(),"Pete Peterson", 200,200,200);
-        party2.put(wizard1.getId(),wizard1);
+        Wizard wizard1 = new Wizard("Pete Peterson", 200, 200, 200);
+        party2.put(wizard1.getId(), wizard1);
         //wizard1.attack();
 
         System.out.println(wizard1.getId());
@@ -42,7 +44,9 @@ public class Main {
             System.out.println(party1.get(i));
         }
 
-        battle(party1.get(1), party2.get(2), party1, party2, graveyard);
+        System.out.println(MainMenu.party1.get(1));
+
+        battle(MainMenu.party1.get(1), MainMenu.party2.get(2), party1, party2, graveyard);
 
         for (Integer i : party1.keySet()) {
             System.out.println(party1.get(i));
@@ -55,28 +59,28 @@ public class Main {
             System.out.println(graveyard.get(i));
         }
 
-        createRandomParty(party1,id);
-        createRandomParty(party2,id);
+        createRandomParty(party1, id);
+        createRandomParty(party2, id);
 
     }
 
-    public static void battle(Character character1, Character character2, HashMap party1, HashMap party2, HashMap graveyard){
+    public static void battle(Character character1, Character character2, HashMap party1, HashMap party2, HashMap graveyard) {
 
         int round = 1;
 
-        while(character1.hp >0 && character2.hp>0){
+        while (character1.hp > 0 && character2.hp > 0) {
             System.out.println("Combat round: " + round);
             character1.hp = character1.hp - character2.attack();
-            System.out.println(character1.getName() + " has " + character1.hp + " hp remaining" );
+            System.out.println(character1.getName() + " has " + character1.hp + " hp remaining");
             character2.hp = character2.hp - character1.attack();
-            System.out.println(character2.getName() + " has " + character2.hp + " hp remaining" );
-            if(character1.hp<=0){
+            System.out.println(character2.getName() + " has " + character2.hp + " hp remaining");
+            if (character1.hp <= 0) {
                 character1.setAlive(false);
                 System.out.println(character1.getName() + " has died!");
                 graveyard.put(character1.getId(), character1);
                 party1.remove(character1.getId());
             }
-            if(character2.hp<=0){
+            if (character2.hp <= 0) {
                 character2.setAlive(false);
                 System.out.println(character2.getName() + " has died!");
                 graveyard.put(character2.getId(), character2);
@@ -87,16 +91,16 @@ public class Main {
 
     }
 
-    public static void  createRandomParty(HashMap party1, UniqueID id){
+    public static void createRandomParty(HashMap party1, UniqueID id) {
 
-        for(int i =0 ; i< 10; i++){
+        for (int i = 0; i < 10; i++) {
             int randomNum = new Random().nextInt(2);
-            if(randomNum == 0){
-                Wizard wizard1 = new Wizard(id.generateID(),"Pete Peterson", 50+ new Random().nextInt(50),10 + new Random().nextInt(40),1+ new Random().nextInt(49));
-                party1.put(wizard1.getId(),wizard1);
-            } else if (randomNum == 1){
-                Warrior warrior1 = new Warrior(id.generateID(),"Jeff Jefferson", 100+ new Random().nextInt(100),10 + new Random().nextInt(40),1+ new Random().nextInt(9));
-                party1.put(warrior1.getId(),warrior1);
+            if (randomNum == 0) {
+                Wizard wizard1 = new Wizard("Pete Peterson", 50 + new Random().nextInt(50), 10 + new Random().nextInt(40), 1 + new Random().nextInt(49));
+                party1.put(wizard1.getId(), wizard1);
+            } else if (randomNum == 1) {
+                Warrior warrior1 = new Warrior("Jeff Jefferson", 100 + new Random().nextInt(100), 10 + new Random().nextInt(40), 1 + new Random().nextInt(9));
+                party1.put(warrior1.getId(), warrior1);
             }
 
         }
