@@ -6,6 +6,13 @@ abstract public class Character {
     protected int hp;
     protected boolean isAlive = true;
 
+    public Character(){
+    }
+
+    public Character(int id){
+        setId(id);
+    }
+
     public Character(int id, String name, int hp) {
         setId(id);
         setName(name);

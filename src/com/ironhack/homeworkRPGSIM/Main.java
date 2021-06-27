@@ -3,6 +3,7 @@ package com.ironhack.homeworkRPGSIM;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class Main {
@@ -10,10 +11,17 @@ public class Main {
     public static void main(String[] args) {
 
         UniqueID id = new UniqueID();
+        Scanner scan = new Scanner(System.in);
 
         HashMap<Integer, Character> party1 = new HashMap<>();
         HashMap<Integer, Character> party2 = new HashMap<>();
         HashMap<Integer, Character> graveyard = new HashMap<>();
+
+        Warrior testwar = new Warrior(id.generateID());
+
+        testwar.createWarrior(testwar);
+
+        System.out.println(testwar.toString());
 
         Warrior warrior1 = new Warrior(id.generateID(),"Jeff Jefferson", 200, 200, 200);
         party1.put(warrior1.getId(),warrior1);

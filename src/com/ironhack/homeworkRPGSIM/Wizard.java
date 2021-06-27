@@ -1,6 +1,10 @@
 package com.ironhack.homeworkRPGSIM;
 
+import java.util.Scanner;
+
 public class Wizard extends Character implements Attacker{
+
+    Scanner scan = new Scanner(System.in);
 
     private int mana;
     private int intelligence;
@@ -96,5 +100,54 @@ public class Wizard extends Character implements Attacker{
     public String toString() {
         return "Id: " + this.getId() +" Wizard name: " + this.getName() +
                 ", hp: " + this.getHp();
+    }
+
+    public Wizard createWarrior(Wizard wizard) {
+        boolean validName = false;
+        boolean validHp = false;
+        boolean validMana = false;
+        boolean validIntelligence = false;
+
+        System.out.println("Give your Wizards a name:> ");
+        while (!validName) {
+            try {
+                wizard.setName(scan.next());
+                validName = true;
+            } catch (Exception er) {
+                System.out.println("Please input a valid name: ");
+                scan.next();
+            }
+        }
+        System.out.println("Set "+ wizard.getName() + "'s starting health:> ");
+        while (!validHp) {
+            try {
+                wizard.setHp(scan.nextInt());
+                validHp = true;
+            } catch (Exception er) {
+                System.out.println("Please input a number: ");
+                scan.next();
+            }
+        }
+        System.out.println("set "+ wizard.getName() + "'s starting mana:> ");
+        while (!validMana) {
+            try {
+                wizard.setMana(scan.nextInt());
+                validMana = true;
+            } catch (Exception er) {
+                System.out.println("Please input a number: ");
+                scan.next();
+            }
+        }
+        System.out.println("Set " + wizard.getName() + "'s intelligence:> ");
+        while (!validIntelligence) {
+            try {
+                wizard.setIntelligence(scan.nextInt());
+                validIntelligence = true;
+            } catch (Exception er) {
+                System.out.println("Please input a number: ");
+                scan.next();
+            }
+        }
+        return wizard;
     }
 }

@@ -5,7 +5,7 @@ public class UniqueID {
     private Integer uniqueID = 0;
 
     public Integer generateID() {
-        uniqueID ++;
+        uniqueID++;
         return uniqueID;
     }
 
