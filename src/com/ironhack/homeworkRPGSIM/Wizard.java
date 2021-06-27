@@ -110,7 +110,7 @@ public class Wizard extends Character implements Attacker{
                 ", hp: " + this.getHp();
     }
 
-    public Wizard createWarrior(Wizard wizard) {
+    public Wizard createWizard(Wizard wizard) {
         boolean validName = false;
         boolean validHp = false;
         boolean validMana = false;
