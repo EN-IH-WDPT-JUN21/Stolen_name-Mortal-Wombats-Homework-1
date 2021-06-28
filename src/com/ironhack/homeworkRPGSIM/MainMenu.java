@@ -196,10 +196,12 @@ class MainMenu {
         for (int i = 0; i < party1.size(); i++) {
             int randomNum = new Random().nextInt(2);
             if (randomNum == 0) {
-                Wizard wizard1 = new Wizard("Pete Peterson", 50 + new Random().nextInt(50), 10 + new Random().nextInt(40), 1 + new Random().nextInt(49));
+                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 +
+                        new Random().nextInt(40), 1 + new Random().nextInt(49));
                 party2.add(wizard1);
             } else {
-                Warrior warrior1 = new Warrior("Jeff Jefferson", 100 + new Random().nextInt(100), 10 + new Random().nextInt(40), 1 + new Random().nextInt(9));
+                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(100), 10 +
+                        new Random().nextInt(40), 1 + new Random().nextInt(9));
                 party2.add(warrior1);
             }
 
@@ -215,15 +217,17 @@ class MainMenu {
         for (int i = 0; i < randomPartySize; i++) {
             int randomNum = new Random().nextInt(2);
             if (randomNum == 0) {
-                Wizard wizard1 = new Wizard("Pete Peterson", 50 + new Random().nextInt(50), 10 + new Random().nextInt(40), 1 + new Random().nextInt(49));
+                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 + new
+                        Random().nextInt(40), 1 + new Random().nextInt(49));
                 party1.add(wizard1);
             } else {
-                Warrior warrior1 = new Warrior("Jeff Jefferson", 100 + new Random().nextInt(100), 10 + new Random().nextInt(40), 1 + new Random().nextInt(9));
+                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(100), 10 +
+                        new Random().nextInt(40), 1 + new Random().nextInt(9));
                 party1.add(warrior1);
             }
 
         }
-        System.out.println("Party created with these brave adventurers: ");
+        System.out.println("Party created with these brave adventurers: \n");
         for(int i = 0; i < party1.size(); i++){
             System.out.println(party1.get(i).toString());
         }
@@ -250,6 +254,41 @@ class MainMenu {
             getsChoice();
         }
 
+    }
+
+    // **** RANDOM NAME GENERATOR ****
+    private static String randomName(){
+        String randomName;
+        int randomNum = new Random().nextInt(20);
+
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Grim Weeper");
+        names.add("I.T.");
+        names.add("John Weak");
+        names.add("Ironing Man");
+        names.add("Jason Burned");
+        names.add("Still Bill");
+        names.add("Florist Gump");
+        names.add("Ellen Replay");
+        names.add("Katnis Nevergreen");
+        names.add("San Holo");
+        names.add("Gary Poter");
+        names.add("Determinator");
+        names.add("Scooby-Undo");
+        names.add("Sherlock Homeless");
+        names.add("Mr. Alt+T");
+        names.add("Conan The Barberian");
+        names.add("Ciderella");
+        names.add("Joan of Dark");
+        names.add("Java the Hut");
+        names.add("Minimus Decimus Meridius");
+
+        randomName = names.get(randomNum);
+        if(party1.toString().contains(randomName) || party2.toString().contains(randomName)){
+            return randomName.concat(" Jr");
+        }else {
+            return randomName;
+        }
     }
 
 }
