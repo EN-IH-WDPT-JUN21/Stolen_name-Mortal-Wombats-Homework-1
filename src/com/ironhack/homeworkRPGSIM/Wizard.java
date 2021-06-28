@@ -126,7 +126,7 @@ public class Wizard extends Character implements Attacker{
         System.out.println("Give your Wizard a name:> ");
         while (!validName) {
             try {
-                setName(scan.next());
+                setName(scan.nextLine());
                 validName = true;
             } catch (Exception er) {
                 System.out.println("Please input a valid name: ");

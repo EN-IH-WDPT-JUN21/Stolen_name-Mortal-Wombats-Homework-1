@@ -128,7 +128,7 @@ public class Warrior extends Character implements Attacker {
 
         while (!validName) {
             try {
-                setName(scan.next());
+                setName(scan.nextLine());
                 validName = true;
             } catch (Exception er) {
                 System.out.println("Please input a valid name: ");

@@ -196,10 +196,10 @@ class MainMenu {
         for (int i = 0; i < party1.size(); i++) {
             int randomNum = new Random().nextInt(2);
             if (randomNum == 0) {
-                Wizard wizard1 = new Wizard("Pete Peterson", 50 + new Random().nextInt(50), 10 + new Random().nextInt(40), 1 + new Random().nextInt(49));
+                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 + new Random().nextInt(40), 1 + new Random().nextInt(49));
                 party2.add(wizard1);
             } else {
-                Warrior warrior1 = new Warrior("Jeff Jefferson", 100 + new Random().nextInt(100), 10 + new Random().nextInt(40), 1 + new Random().nextInt(9));
+                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(100), 10 + new Random().nextInt(40), 1 + new Random().nextInt(9));
                 party2.add(warrior1);
             }
 
@@ -215,15 +215,15 @@ class MainMenu {
         for (int i = 0; i < randomPartySize; i++) {
             int randomNum = new Random().nextInt(2);
             if (randomNum == 0) {
-                Wizard wizard1 = new Wizard("Pete Peterson", 50 + new Random().nextInt(50), 10 + new Random().nextInt(40), 1 + new Random().nextInt(49));
+                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 + new Random().nextInt(40), 1 + new Random().nextInt(49));
                 party1.add(wizard1);
             } else {
-                Warrior warrior1 = new Warrior("Jeff Jefferson", 100 + new Random().nextInt(100), 10 + new Random().nextInt(40), 1 + new Random().nextInt(9));
+                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(100), 10 + new Random().nextInt(40), 1 + new Random().nextInt(9));
                 party1.add(warrior1);
             }
 
         }
-        System.out.println("Party created with these brave adventurers: ");
+        System.out.println("Party created with these brave adventurers: \n");
         for(int i = 0; i < party1.size(); i++){
             System.out.println(party1.get(i).toString());
         }
@@ -250,6 +250,30 @@ class MainMenu {
             getsChoice();
         }
 
+    }
+
+    private static String randomName(){
+        String randomName;
+        int randomNum = new Random().nextInt(10);
+
+        ArrayList<String> names = new ArrayList<>();
+        names.add("JOOLS");
+        names.add("JOPS");
+        names.add("STOO");
+        names.add("RJ");
+        names.add("UBIK");
+        names.add("CJ");
+        names.add("CHRIS");
+        names.add("PETE");
+        names.add("TADGER");
+        names.add("HECTOR");
+
+        randomName = names.get(randomNum);
+        if(party1.toString().contains(randomName) || party2.toString().contains(randomName)){
+            return randomName.concat(" Jr");
+        }else {
+            return randomName;
+        }
     }
 
 }
