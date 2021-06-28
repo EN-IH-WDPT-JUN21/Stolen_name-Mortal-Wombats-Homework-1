@@ -9,7 +9,7 @@ public class Warrior extends Character implements Attacker {
     private int stamina;
     private int strength;
 
-    // Max & Min Values for Stamina,Strength and HP
+    // **** Max & Min Values for Stamina,Strength and HP ****
     final int MAXSTAMINA = 50;
     final int MAXSTRENGTH = 10;
     final int MAXHP = 200;
@@ -17,6 +17,7 @@ public class Warrior extends Character implements Attacker {
     final int MINSTRENGTH = 1;
     final int MINHP = 100;
 
+    // **** CONSTRUCTORS ****
 
     public Warrior(String name, int hp, int stamina, int strength) {
         super(name, hp);
@@ -31,6 +32,7 @@ public class Warrior extends Character implements Attacker {
 
     }
 
+    // **** GETTERS & SETTERS ****
 
     public int getStamina() {
         return stamina;
@@ -84,6 +86,7 @@ public class Warrior extends Character implements Attacker {
         }
     }
 
+    // **** ATTACK FUNCTION ****
 
     public int attack() {
         int damage = 0;
@@ -102,19 +105,19 @@ public class Warrior extends Character implements Attacker {
         return damage;
     }
 
+    // **** TO STRING METHOD FOR PRETTIER PRINTING ****
+
     @Override
     public String toString() {
-        return "Warrior{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", hp=" + hp +
-                ", stamina=" + stamina +
-                ", strength=" + strength +
-                '}';
+        return "Warrior: " + name +
+                "\n HP: " + hp +
+                "\n Stamina: " + stamina +
+                "\n Strength: " + strength + "\n";
     }
 
-    // This method can be called when we want the user to input the warriors details.
-    // We would need to create a warrior object first
+
+    // **** METHOD TO MANUALLY CREATE CHARACTER ****
+
     public void customiseWarrior() {
         boolean validName = false;
         boolean validHp = false;
@@ -142,7 +145,7 @@ public class Warrior extends Character implements Attacker {
                 scan.next();
             }
         }
-        System.out.println("set "+ getName() + "'s starting stamina:> ");
+        System.out.println("Set "+ getName() + "'s starting stamina:> ");
         while (!validStamina) {
             try {
                 setStamina(scan.nextInt());

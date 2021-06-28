@@ -8,7 +8,8 @@ public class Wizard extends Character implements Attacker{
 
     private int mana;
     private int intelligence;
-    // Setting Variables for Max and Min Stats
+
+    //**** Setting Variables for Max and Min Stats ****
 
     final int MAXINTELLIGENCE = 50;
     final int MAXMANA = 50;
@@ -16,6 +17,8 @@ public class Wizard extends Character implements Attacker{
     final int MININTELLIGENCE = 1;
     final int MINMANA = 10;
     final int MINHP = 50;
+
+    // **** Constructors ****
 
     public Wizard(String name, int hp, int mana, int intelligence) {
         super(name, hp);
@@ -28,6 +31,8 @@ public class Wizard extends Character implements Attacker{
     public Wizard() {
 
     }
+
+    // **** Getters & Setters ****
 
     public int getMana() {
         return mana;
@@ -82,7 +87,7 @@ public class Wizard extends Character implements Attacker{
         }
     }
 
-
+    // **** ATTACK FUNCTION ****
 
     public int attack() {
         int damage=0;
@@ -100,11 +105,17 @@ public class Wizard extends Character implements Attacker{
         return damage;
     }
 
+    // **** TO STRING METHOD FOR PRETTIER FORMATTING ****
+
     @Override
     public String toString() {
-        return "Id: " + this.getId() +" Wizard name: " + this.getName() +
-                ", hp: " + this.getHp();
+        return "Wizard: " + name +
+                "\n HP: " + hp +
+                "\n Mana: " + mana +
+                "\n Intelligence: " + intelligence + "\n";
     }
+
+    // **** METHOD TO MANUALLY CREATE CHARACTER ****
 
     public void customiseWizard() {
         boolean validName = false;
@@ -112,7 +123,7 @@ public class Wizard extends Character implements Attacker{
         boolean validMana = false;
         boolean validIntelligence = false;
 
-        System.out.println("Give your Wizards a name:> ");
+        System.out.println("Give your Wizard a name:> ");
         while (!validName) {
             try {
                 setName(scan.next());
@@ -132,7 +143,7 @@ public class Wizard extends Character implements Attacker{
                 scan.next();
             }
         }
-        System.out.println("set "+ getName() + "'s starting mana:> ");
+        System.out.println("Set "+ getName() + "'s starting mana:> ");
         while (!validMana) {
             try {
                 setMana(scan.nextInt());
