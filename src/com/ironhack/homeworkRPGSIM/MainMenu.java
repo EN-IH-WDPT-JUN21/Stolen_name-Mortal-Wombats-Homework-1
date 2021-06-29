@@ -264,7 +264,26 @@ class MainMenu {
             }
             System.out.println();
         }
-        System.out.println("Party 1 graveyard: " + graveyard.getParty1Graveyard() + " | Party 2 graveyard: " + graveyard.getParty2Graveyard());
+        //System.out.println("Party 1 graveyard: " + graveyard.getParty1Graveyard() + " | Party 2 graveyard: " + graveyard.getParty2Graveyard());
+        if (party1.size() == 0) {
+            if (graveyard.getParty2Graveyard() == 0) {
+                System.out.println("Party 2 emerged from this battle victorious and without any loses!");
+            } else if (graveyard.getParty2Graveyard() == 1) {
+                System.out.println("Although they buried " + graveyard.getParty2Graveyard() + " companion, Party 2 emerged victorious from this battle");
+            } else {
+                System.out.println("Although they buried " + graveyard.getParty2Graveyard() + " companions, Party 2 emerged victorious from this battle");
+            }
+        } else if (party2.size() == 0) {
+            if (graveyard.getParty1Graveyard() == 0) {
+                System.out.println("Party 1 emerged from this battle victorious and without any loses!");
+            }
+            else if (graveyard.getParty1Graveyard() == 1) {
+                System.out.println("Although they buried " + graveyard.getParty1Graveyard() + " companion, Party 1 emerged victorious from this battle");
+            }
+            else {
+                System.out.println("Although they buried " + graveyard.getParty1Graveyard() + " companions, Party 1 emerged victorious from this battle");
+            }
+        }
     }
 
     private static void getsChoice() {

@@ -1,7 +1,6 @@
 package com.ironhack.homeworkRPGSIM;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -81,7 +80,6 @@ public class Battle {
                 round++;
             }
         } while (party1.size() > 0 && party2.size() > 0);
-        System.out.println("The graveyard claimed the follow: \n" + graveyard + "\n");
     }
 
     public static Character chooseCharacter(ArrayList party) {
