@@ -2,16 +2,16 @@ package com.ironhack.homeworkRPGSIM;
 
 public class UniqueID {
 
-    private Integer uniqueID = 0;
+    // **** I HAVE MADE THIS STATIC FOR CONSISTENCY ****
+    static Integer uniqueID = 0;
 
     public Integer generateID() {
-        uniqueID ++;
+        uniqueID++;
         return uniqueID;
     }
 
     public UniqueID() {
 
     }
-
 
 }

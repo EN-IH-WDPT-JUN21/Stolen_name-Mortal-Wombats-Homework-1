@@ -1,13 +1,20 @@
 package com.ironhack.homeworkRPGSIM;
 
 abstract public class Character {
-    protected int id;
+    UniqueID uniqueId = new UniqueID();
+    protected int id = uniqueId.generateID();
     protected String name;
     protected int hp;
     protected boolean isAlive = true;
 
-    public Character(int id, String name, int hp) {
+    public Character(){
+    }
+
+    public Character(int id){
         setId(id);
+    }
+
+    public Character(String name, int hp) {
         setName(name);
         setHp(hp);
 

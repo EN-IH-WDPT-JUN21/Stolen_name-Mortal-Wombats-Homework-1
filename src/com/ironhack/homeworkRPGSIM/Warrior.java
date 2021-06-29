@@ -1,18 +1,38 @@
 package com.ironhack.homeworkRPGSIM;
 
-public class Warrior extends Character implements Attacker{
+import java.util.Scanner;
+
+public class Warrior extends Character implements Attacker {
+
+    Scanner scan = new Scanner(System.in);
 
     private int stamina;
     private int strength;
 
-    public Warrior(int id, String name, int hp, int stamina, int strength) {
-        super(id, name, hp);
+    // **** Max & Min Values for Stamina,Strength and HP ****
+    final int MAXSTAMINA = 50;
+    final int MAXSTRENGTH = 10;
+    final int MAXHP = 200;
+    final int MINSTAMINA = 10;
+    final int MINSTRENGTH = 1;
+    final int MINHP = 100;
+
+    // **** CONSTRUCTORS ****
+
+    public Warrior(String name, int hp, int stamina, int strength) {
+        super(name, hp);
         setStamina(stamina);
         setStrength(strength);
 
         System.out.println("Brave new Warrior " + name + " joins the party, they have a hp of " + getHp() +
                 " a stamina of " + getStamina() + " and a strength of " + getStrength());
     }
+
+    public Warrior() {
+
+    }
+
+    // **** GETTERS & SETTERS ****
 
     public int getStamina() {
         return stamina;
@@ -22,13 +42,15 @@ public class Warrior extends Character implements Attacker{
         return strength;
     }
 
-    public void setHp(int hp){
-        if(hp < 100){
-            System.out.println("hp for Warriors must be 100 or more, setting hp for this character to 100");
-            this.hp = 100;
-        } else if(hp > 200){
-            System.out.println("hp for Warriors cannot be more than 200, setting hp for this character to 200");
-            this.hp = 200;
+    public void setHp(int hp) {
+        if (hp < MINHP) {
+            System.out.println("hp for Warriors must be " + MINHP + " or more, setting hp for this character to "
+                    + MINHP);
+            this.hp = MINHP;
+        } else if (hp > MAXHP) {
+            System.out.println("hp for Warriors cannot be more than " + MAXHP + ", setting hp for this character to" +
+                    MAXHP);
+            this.hp = MAXHP;
         } else {
             this.hp = hp;
         }
@@ -36,12 +58,14 @@ public class Warrior extends Character implements Attacker{
     }
 
     public void setStamina(int stamina) {
-        if(stamina < 10){
-            System.out.println("Stamina must be 10 or more, setting Stamina for this character to 10");
-            this.stamina = 10;
-        } else if(stamina >50){
-            System.out.println("Stamina cannot be more than 50, setting Stamina for this character to 50");
-            this.stamina = 50;
+        if (stamina < MINSTAMINA) {
+            System.out.println("Stamina must be " + MINSTAMINA + " or more, setting Stamina for this character to " +
+                    MINSTAMINA);
+            this.stamina = MINSTAMINA;
+        } else if (stamina > MAXSTAMINA) {
+            System.out.println("Stamina cannot be more than " + MAXSTAMINA + ", setting Stamina for this character to " +
+                    +MAXSTAMINA);
+            this.stamina = MAXSTAMINA;
         } else {
             this.stamina = stamina;
         }
@@ -49,29 +73,31 @@ public class Warrior extends Character implements Attacker{
 
     public void setStrength(int strength) {
 
-        if(strength < 1){
-            System.out.println("Strength must be 1 or more, setting Strength for this character to 1");
-            this.strength = 1;
-        } else if(strength >10){
-            System.out.println("Strength cannot be more than 10, setting Strength for this character to 10");
-            this.strength = 10;
+        if (strength < MINSTRENGTH) {
+            System.out.println("Strength must be " + MINSTRENGTH + " or more, setting Strength for this character to "
+                    + MINSTRENGTH);
+            this.strength = MINSTRENGTH;
+        } else if (strength > MAXSTRENGTH) {
+            System.out.println("Strength cannot be more than " + MAXSTRENGTH + ", setting Strength for this character" +
+                    " to " + MAXSTRENGTH);
+            this.strength = MAXSTRENGTH;
         } else {
             this.strength = strength;
         }
     }
 
-
+    // **** ATTACK FUNCTION ****
 
     public int attack() {
-        int damage=0;
+        int damage = 0;
 
-        if(stamina>=5){
+        if (stamina >= 5) {
             damage = strength;
             stamina = stamina - 5;
             System.out.println(name + " does a Heavy Attack which inflicts " + damage + " damage, take that!");
         } else {
-            damage = strength/2;
-            stamina ++;
+            damage = strength / 2;
+            stamina++;
             System.out.println(name + " is so tired they can only manage a Weak Attack, which inflicts " + damage + " damage, pathetic");
         }
 
@@ -79,10 +105,67 @@ public class Warrior extends Character implements Attacker{
         return damage;
     }
 
+    // **** TO STRING METHOD FOR PRETTIER PRINTING ****
+
     @Override
     public String toString() {
-        return "Id: " + this.getId() + " Warrior name: " + this.getName() +
-                ", hp: " + this.getHp();
+        return "Warrior: " + name +
+                "\n HP: " + hp +
+                "\n Stamina: " + stamina +
+                "\n Strength: " + strength + "\n";
     }
 
+
+    // **** METHOD TO MANUALLY CREATE CHARACTER ****
+
+    public void customiseWarrior() {
+        boolean validName = false;
+        boolean validHp = false;
+        boolean validStrength = false;
+        boolean validStamina = false;
+
+        System.out.println("Give your Warrior a name:> ");
+
+        while (!validName) {
+            try {
+                setName(scan.nextLine());
+                validName = true;
+            } catch (Exception er) {
+                System.out.println("Please input a valid name: ");
+                scan.next();
+            }
+        }
+        System.out.println("Set " + getName() + "'s starting health:> ");
+        while (!validHp) {
+            try {
+                setHp(scan.nextInt());
+                validHp = true;
+            } catch (Exception er) {
+                System.out.println("Please input a number: ");
+                scan.next();
+            }
+        }
+        System.out.println("Set "+ getName() + "'s starting stamina:> ");
+        while (!validStamina) {
+            try {
+                setStamina(scan.nextInt());
+                validStamina = true;
+            } catch (Exception er) {
+                System.out.println("Please input a number: ");
+                scan.next();
+            }
+        }
+        System.out.println("Set "+ getName() + "'s strength:> ");
+        while (!validStrength) {
+            try {
+                setStrength(scan.nextInt());
+                validStrength = true;
+            } catch (Exception er) {
+                System.out.println("Please input a number: ");
+                scan.next();
+            }
+        }
+        System.out.println("Brave new Warrior " + getName() + " joins the party, they have a hp of " + getHp() +
+                " a stamina of " + getStamina() + " and a strength of " + getStrength());
+    }
 }
