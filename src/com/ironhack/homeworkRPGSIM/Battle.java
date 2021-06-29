@@ -8,10 +8,22 @@ import java.util.Scanner;
 public class Battle {
 
 
-    public static void battle(ArrayList party1, ArrayList party2, HashMap graveyard) {
+    public static void battle(ArrayList party1, ArrayList party2, String[][] gr) {
         Scanner scanner = new Scanner(System.in);
         Character character1 = null;
         Character character2 = null;
+
+        String eg = "[\uD83D\uDD73]"; // String for empty grave
+
+        /*String[][] gr =
+                {
+                        {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+                        {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+                        {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+                        {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+                        {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+                };*/
+        Graveyard graveyard = new Graveyard(gr);
 
         do {
             if (MainMenu.playerNumber == 1 && party1.size() > 1) {
@@ -55,13 +67,15 @@ public class Battle {
                 if (character1.hp <= 0) {
                     character1.setAlive(false);
                     System.out.println(character1.getName() + " has died!");
-                    MainMenu.graveyard.put(character1.getId(), character1);
+                    //MainMenu.graveyard.put(character1.getId(), character1);
+                    graveyard.addGraveParty1(gr);
                     party1.remove(character1);
                 }
                 if (character2.hp <= 0) {
                     character2.setAlive(false);
                     System.out.println(character2.getName() + " has died!");
-                    MainMenu.graveyard.put(character2.getId(), character2);
+                    //MainMenu.graveyard.put(character2.getId(), character2);
+                    graveyard.addGraveParty2(gr);
                     party2.remove(character2);
                 }
                 round++;
@@ -95,4 +109,5 @@ public class Battle {
 
         return character1;
     }
+
 }

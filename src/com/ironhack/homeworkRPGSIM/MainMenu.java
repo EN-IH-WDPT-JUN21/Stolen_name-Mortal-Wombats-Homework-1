@@ -10,11 +10,25 @@ class MainMenu {
     private static int ch =0;
     public static int playerNumber = 1;
     private static final Scanner scanner = new Scanner(System.in);
+
     // **** THESE PARTIES ARE REFERENCED THROUGHOUT ****
     static ArrayList<Character> party1 = new ArrayList<>();
     static ArrayList<Character> party2 = new ArrayList<>();
-    // **** GRAVEYARD HASHMAP ****
-    static HashMap<Integer, Character> graveyard = new HashMap<>();
+
+    // **** GRAVEYARD VARIABLES ****
+    //static HashMap<Integer, Character> graveyard = new HashMap<>();
+    static private String eg = "[\uD83D\uDD73]"; // String for empty grave
+
+    static String[][] gr =
+            {
+                    {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+                    {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+                    {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+                    {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+                    {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+            };
+
+
 
     // **** MAIN MENU METHOD  - USED TO INITIALISE THE GAME ****
     public static void mainMenu() {
@@ -88,7 +102,7 @@ class MainMenu {
         } while (ch != 1 && ch != 2 && ch != 0);
 
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
-        Battle.battle(party1, party2, graveyard);
+        Battle.battle(party1, party2, gr);
     }
 
     // **** TWO PLAYER GAME MODE ****
@@ -134,7 +148,7 @@ class MainMenu {
             } while (ch != 1 && ch != 2 && ch != 0);
         }
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
-        Battle.battle(party1, party2, graveyard);
+        Battle.battle(party1, party2, gr);
     }
 
     private static void createOwnParty() {
@@ -238,10 +252,19 @@ class MainMenu {
 
     // **** GENERATES RANDOM PARTIES FOR BOTH PLAYERS AND STARTS THE BATTLE ****
     private static void generateRandomGame() {
+        Graveyard graveyard = new Graveyard(gr);
         playerNumber = 0;
         generateRandomParty(party1);
         generateRandomParty(party1, party2);
-        Battle.battle(party1, party2, graveyard);
+        Battle.battle(party1, party2, gr);
+        System.out.println("\n******* A GRIM VIEW AT THE GRAVEYARD AFTER THE BATTLE! *******\n");
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                System.out.print(gr[i][j] + "   ");
+            }
+            System.out.println();
+        }
+        System.out.println("Party 1 graveyard: " + graveyard.getParty1Graveyard() + " | Party 2 graveyard: " + graveyard.getParty2Graveyard());
     }
 
     private static void getsChoice() {
