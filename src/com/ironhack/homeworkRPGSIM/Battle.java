@@ -65,6 +65,7 @@ public class Battle {
                 System.out.println(character2.getName() + " has " + character2.hp + " hp remaining");
                 if (character1.hp <= 0) {
                     character1.setAlive(false);
+                    character1.hp = 0;
                     System.out.println(character1.getName() + " has died!");
                     //MainMenu.graveyard.put(character1.getId(), character1);
                     graveyard.addGraveParty1(gr);
@@ -72,6 +73,7 @@ public class Battle {
                 }
                 if (character2.hp <= 0) {
                     character2.setAlive(false);
+                    character2.hp=0;
                     System.out.println(character2.getName() + " has died!");
                     //MainMenu.graveyard.put(character2.getId(), character2);
                     graveyard.addGraveParty2(gr);
