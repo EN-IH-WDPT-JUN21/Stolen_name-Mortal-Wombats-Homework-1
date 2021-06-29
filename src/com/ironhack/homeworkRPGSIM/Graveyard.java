@@ -17,7 +17,7 @@ public class Graveyard {
     static int party2_graveyard = 0;
 
     int randomRowMin = 0;
-    int randomRowMax = 9;
+    int randomRowMax = 5;
     int randomColMin = 0;
     int randomColMax = 4;
 
@@ -36,13 +36,15 @@ public class Graveyard {
         if (graveyardArray[randomColumn][randomRow].equals(emptyGrave)) {
             graveyardArray[randomColumn][randomRow] = fullGraveParty1;
         } else if (graveyardArray[randomColumn][randomRow].equals(fullGraveParty1)) {
-            //while (graveyardArray[randomColumn][randomRow].equals(fullGraveParty1)) {
+            do {
                 randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
                 randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
                 graveyardArray[randomColumn][randomRow] = fullGraveParty1;
-            }
-        party1_graveyard ++;
+            } while (graveyardArray[randomColumn][randomRow].equals(fullGraveParty1));
+
         }
+        party1_graveyard ++;
+    }
 
     public void addGraveParty2(String[][] graveyardArray) {
 
@@ -52,13 +54,15 @@ public class Graveyard {
         if (graveyardArray[randomColumn][randomRow].equals(emptyGrave)) {
             graveyardArray[randomColumn][randomRow] = fullGraveParty2;
         } else if (graveyardArray[randomColumn][randomRow].equals(fullGraveParty2)) {
-            //while (graveyardArray[randomColumn][randomRow].equals(fullGraveParty2)) {
+            do {
                 randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
                 randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
                 graveyardArray[randomColumn][randomRow] = fullGraveParty2;
-            }
-        party2_graveyard ++;
+            } while (graveyardArray[randomColumn][randomRow].equals(fullGraveParty2));
+
         }
+        party2_graveyard++;
+    }
 
     public int getParty1Graveyard() {
         return party1_graveyard;
