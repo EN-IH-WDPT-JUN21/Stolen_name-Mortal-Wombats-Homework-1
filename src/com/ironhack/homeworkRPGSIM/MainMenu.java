@@ -7,7 +7,7 @@ import java.util.*;
 class MainMenu {
 
     // **** INITIAL VARIABLE CREATION ****
-    private static int ch =0;
+    private static int ch = 0;
     public static int playerNumber = 1;
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -21,14 +21,18 @@ class MainMenu {
 
     static String[][] gr =
             {
-                    {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
-                    {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
-                    {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
-                    {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
-                    {eg, eg, eg, eg, eg, eg, eg, eg, eg, eg},
+                    {eg, eg, eg, eg, eg, eg},
+                    {eg, eg, eg, eg, eg, eg},
+                    {eg, eg, eg, eg, eg, eg},
+                    {eg, eg, eg, eg, eg, eg},
+                    {eg, eg, eg, eg, eg, eg},
             };
 
-
+    static String[] legend = {"  |    ======================",
+            "  |     [\uD83D\uDD73] - EMPTY GRAVE",
+            "  |     [💀] - PARTY 1 GRAVE",
+            "  |     [\uD83D\uDC7B] - PARTY 2 GRAVE",
+            "  |    ======================"};
 
     // **** MAIN MENU METHOD  - USED TO INITIALISE THE GAME ****
     public static void mainMenu() {
@@ -257,31 +261,34 @@ class MainMenu {
         generateRandomParty(party1);
         generateRandomParty(party1, party2);
         Battle.battle(party1, party2, gr);
-        System.out.println("\n******* A GRIM VIEW AT THE GRAVEYARD AFTER THE BATTLE! *******\n");
+        System.out.println("\n**************** A GRIM VIEW AT THE GRAVEYARD AFTER THE BATTLE! *****************\n");
+
         for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 10; j++) {
-                System.out.print(gr[i][j] + "   ");
+            System.out.print("      ");
+            for (int j = 0; j < 6; j++) {
+                System.out.print(gr[i][j] + "   "); // PRINTING GRAVES TO GRAVEYARD
             }
-            System.out.println();
+            System.out.println(legend[i]); // PRINTING LEGEND TO GRAVEYARD
         }
-        //System.out.println("Party 1 graveyard: " + graveyard.getParty1Graveyard() + " | Party 2 graveyard: " + graveyard.getParty2Graveyard());
+
+        // PRINTING PROPER VICTORY MESSAGE DEPENDING ON WITH PARTY WON THE BATTLE
         if (party1.size() == 0) {
             if (graveyard.getParty2Graveyard() == 0) {
-                System.out.println("Party 2 emerged from this battle victorious and without any loses!");
+                System.out.println("\nPARTY 2 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSES!");
             } else if (graveyard.getParty2Graveyard() == 1) {
-                System.out.println("Although they buried " + graveyard.getParty2Graveyard() + " companion, Party 2 emerged victorious from this battle");
+                System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty2Graveyard() + " COMPANION, PARTY 2 EMERGED VICTORIOUS FROM THIS BATTLE");
             } else {
-                System.out.println("Although they buried " + graveyard.getParty2Graveyard() + " companions, Party 2 emerged victorious from this battle");
+                System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty2Graveyard() + " COMPANIONS, PARTY 2 EMERGED VICTORIOUS FROM THIS BATTLE");
             }
         } else if (party2.size() == 0) {
             if (graveyard.getParty1Graveyard() == 0) {
-                System.out.println("Party 1 emerged from this battle victorious and without any loses!");
+                System.out.println("\nPARTY 1 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSES!");
             }
             else if (graveyard.getParty1Graveyard() == 1) {
-                System.out.println("Although they buried " + graveyard.getParty1Graveyard() + " companion, Party 1 emerged victorious from this battle");
+                System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty1Graveyard() + " COMPANION, PARTY 1 EMERGED VICTORIOUS FROM THIS BATTLE");
             }
             else {
-                System.out.println("Although they buried " + graveyard.getParty1Graveyard() + " companions, Party 1 emerged victorious from this battle");
+                System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty1Graveyard() + " COMPANIONS, PARTY 1 EMERGED VICTORIOUS FROM THIS BATTLE");
             }
         }
     }
