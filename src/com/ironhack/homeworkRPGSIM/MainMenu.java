@@ -87,7 +87,7 @@ class MainMenu {
                     generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
                     break;
                 case 2:
-                    generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
+                    generateRandomParty(party1); //addCharactersToParties(generateRandomParty());
                     generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
                     break;
                 case 3:
