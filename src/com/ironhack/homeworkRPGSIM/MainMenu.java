@@ -73,7 +73,7 @@ class MainMenu {
                     generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
                     break;
                 case 2:
-                    generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
+                    generateRandomParty(party1); //addCharactersToParties(generateRandomParty());
                     generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
                     break;
                 case 3:
@@ -196,12 +196,12 @@ class MainMenu {
         for (int i = 0; i < party1.size(); i++) {
             int randomNum = new Random().nextInt(2);
             if (randomNum == 0) {
-                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 +
-                        new Random().nextInt(40), 1 + new Random().nextInt(49));
+                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(101), 10 +
+                        new Random().nextInt(51), 1 + new Random().nextInt(51));
                 party2.add(wizard1);
             } else {
-                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(100), 10 +
-                        new Random().nextInt(40), 1 + new Random().nextInt(9));
+                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(201), 10 +
+                        new Random().nextInt(51), 1 + new Random().nextInt(11));
                 party2.add(warrior1);
             }
 
@@ -217,12 +217,12 @@ class MainMenu {
         for (int i = 0; i < randomPartySize; i++) {
             int randomNum = new Random().nextInt(2);
             if (randomNum == 0) {
-                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 + new
-                        Random().nextInt(40), 1 + new Random().nextInt(49));
+                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(101), 10 + new
+                        Random().nextInt(51), 1 + new Random().nextInt(51));
                 party1.add(wizard1);
             } else {
-                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(100), 10 +
-                        new Random().nextInt(40), 1 + new Random().nextInt(9));
+                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(201), 10 +
+                        new Random().nextInt(51), 1 + new Random().nextInt(11));
                 party1.add(warrior1);
             }
 

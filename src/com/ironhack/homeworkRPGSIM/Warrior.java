@@ -1,5 +1,6 @@
 package com.ironhack.homeworkRPGSIM;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Warrior extends Character implements Attacker {
@@ -96,7 +97,7 @@ public class Warrior extends Character implements Attacker {
             stamina = stamina - 5;
             System.out.println(name + " does a Heavy Attack which inflicts " + damage + " damage, take that!");
         } else {
-            damage = strength / 2;
+            damage = (strength / 2 >= 1) ? strength / 2 : 1;
             stamina++;
             System.out.println(name + " is so tired they can only manage a Weak Attack, which inflicts " + damage + " damage, pathetic");
         }
@@ -130,7 +131,7 @@ public class Warrior extends Character implements Attacker {
             try {
                 setName(scan.nextLine());
                 validName = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a valid name: ");
                 scan.next();
             }
@@ -140,7 +141,7 @@ public class Warrior extends Character implements Attacker {
             try {
                 setHp(scan.nextInt());
                 validHp = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
@@ -150,7 +151,7 @@ public class Warrior extends Character implements Attacker {
             try {
                 setStamina(scan.nextInt());
                 validStamina = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
@@ -160,7 +161,7 @@ public class Warrior extends Character implements Attacker {
             try {
                 setStrength(scan.nextInt());
                 validStrength = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }

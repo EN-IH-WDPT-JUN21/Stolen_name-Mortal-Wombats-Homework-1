@@ -1,5 +1,6 @@
 package com.ironhack.homeworkRPGSIM;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Wizard extends Character implements Attacker{
@@ -128,7 +129,7 @@ public class Wizard extends Character implements Attacker{
             try {
                 setName(scan.nextLine());
                 validName = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a valid name: ");
                 scan.next();
             }
@@ -138,7 +139,7 @@ public class Wizard extends Character implements Attacker{
             try {
                 setHp(scan.nextInt());
                 validHp = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
@@ -148,7 +149,7 @@ public class Wizard extends Character implements Attacker{
             try {
                 setMana(scan.nextInt());
                 validMana = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
@@ -158,7 +159,7 @@ public class Wizard extends Character implements Attacker{
             try {
                 setIntelligence(scan.nextInt());
                 validIntelligence = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
