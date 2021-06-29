@@ -227,16 +227,16 @@ class MainMenu {
     }
     // **** RANDOMLY GENERATES NEW PARTY WITH A RANDOM PARTY SIZE
     private static void generateRandomParty(ArrayList party1) {
-        int randomPartySize = new Random().nextInt(5); // MAX PARTY SIZE SET TO 5
+        int randomPartySize = 1 + new Random().nextInt(5); // MAX PARTY SIZE SET TO 5
         for (int i = 0; i < randomPartySize; i++) {
             int randomNum = new Random().nextInt(2);
             if (randomNum == 0) {
-                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 + new
-                        Random().nextInt(40), 1 + new Random().nextInt(49));
+                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(51), 10 + new
+                        Random().nextInt(41), 1 + new Random().nextInt(50));
                 party1.add(wizard1);
             } else {
-                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(100), 10 +
-                        new Random().nextInt(40), 1 + new Random().nextInt(9));
+                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(101), 10 +
+                        new Random().nextInt(41), 1 + new Random().nextInt(10));
                 party1.add(warrior1);
             }
 
