@@ -16,9 +16,11 @@ class MainMenu {
     static ArrayList<Character> party2 = new ArrayList<>();
 
     // **** GRAVEYARD VARIABLES ****
-    //static HashMap<Integer, Character> graveyard = new HashMap<>();
-    static private String eg = "[\uD83D\uDD73]"; // String for empty grave
 
+    // String icon for empty grave
+    static private String eg = "[\uD83D\uDD73]";
+
+    // Creating array for empty graveyard
     static String[][] gr =
             {
                     {eg, eg, eg, eg, eg, eg},
@@ -28,6 +30,7 @@ class MainMenu {
                     {eg, eg, eg, eg, eg, eg},
             };
 
+    // Creating String for a graveyard legend to be displayed next to graveyard
     static String[] legend = {"  |    ======================",
             "  |     [\uD83D\uDD73] - EMPTY GRAVE",
             "  |     [💀] - PARTY 1 GRAVE",
@@ -107,6 +110,7 @@ class MainMenu {
 
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
         Battle.battle(party1, party2, gr);
+        // Generate and show graveyard
         Battle.generateGraveyard(gr, legend);
     }
 
@@ -154,6 +158,7 @@ class MainMenu {
         }
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
         Battle.battle(party1, party2, gr);
+        // Generate and show graveyard
         Battle.generateGraveyard(gr, legend);
     }
 
@@ -163,6 +168,7 @@ class MainMenu {
         generateRandomParty(party1);
         generateRandomParty(party1, party2);
         Battle.battle(party1, party2, gr);
+        // Generate and show graveyard
         Battle.generateGraveyard(gr, legend);
     }
 
@@ -311,7 +317,5 @@ class MainMenu {
             return randomName;
         }
     }
-
-
 
 }
