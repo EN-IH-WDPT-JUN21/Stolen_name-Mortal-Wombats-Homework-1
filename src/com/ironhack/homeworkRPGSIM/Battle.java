@@ -50,26 +50,31 @@ public class Battle {
 
 
             while (character1.hp > 0 && character2.hp > 0) {
-                System.out.println("Combat round: " + round);
+                System.out.println("\nCombat round: " + round +
+                                   "\n-----------------");
                 character1.hp = character1.hp - character2.attack();
-                System.out.println(character1.getName() + " has " + character1.hp + " hp remaining");
                 character2.hp = character2.hp - character1.attack();
-                System.out.println(character2.getName() + " has " + character2.hp + " hp remaining");
                 if (character1.hp <= 0) {
                     character1.setAlive(false);
                     character1.hp = 0;
+                    System.out.println(character1.getName() + " has " + character1.hp + " hp!");
                     System.out.println(character1.getName() + " has died!");
                     //MainMenu.graveyard.put(character1.getId(), character1);
                     graveyard.addGraveParty1(gr);
                     party1.remove(character1);
+                } else {
+                    System.out.println(character1.getName() + " has " + character1.hp + " hp remaining");
                 }
                 if (character2.hp <= 0) {
                     character2.setAlive(false);
                     character2.hp=0;
+                    System.out.println(character2.getName() + " has " + character2.hp + " hp!");
                     System.out.println(character2.getName() + " has died!");
                     //MainMenu.graveyard.put(character2.getId(), character2);
                     graveyard.addGraveParty2(gr);
                     party2.remove(character2);
+                } else {
+                    System.out.println(character2.getName() + " has " + character2.hp + " hp remaining");
                 }
                 round++;
             }
@@ -102,17 +107,20 @@ public class Battle {
         return character1;
     }
 
+    // GENERATING AND SHOWING A GRAVEYARD
     public static void generateGraveyard(String[][] gr, String[] legend) {
         Graveyard graveyard = new Graveyard(gr);
 
         System.out.println("\n**************** A GRIM VIEW AT THE GRAVEYARD AFTER THE BATTLE! *****************\n");
 
+        // Looping through 2D array and "printing graves" to graveyard at random indexes
         for (int i = 0; i < 5; i++) {
             System.out.print("      ");
             for (int j = 0; j < 6; j++) {
-                System.out.print(gr[i][j] + "   "); // PRINTING GRAVES TO GRAVEYARD
+                System.out.print(gr[i][j] + "   ");
             }
-            System.out.println(legend[i]); // PRINTING LEGEND TO GRAVEYARD
+            // Printing legend next to graveyard row by row
+            System.out.println(legend[i]);
         }
 
         // PRINTING PROPER VICTORY MESSAGE DEPENDING ON WITH PARTY WON THE BATTLE
@@ -135,7 +143,7 @@ public class Battle {
                 System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty1Graveyard() + " COMPANIONS, PARTY 1 EMERGED VICTORIOUS FROM THIS BATTLE!");
             }
         } else if (MainMenu.party1.size() == 0 && MainMenu.party2.size() == 0) {
-            System.out.println("ALL BRAVE ADVENTURERS DIED IN THIS EVEN BATTLE. tHEY WILL STAY AT THIS GRAVEYARD FOREVER!");
+            System.out.println("ALL BRAVE ADVENTURERS DIED IN THIS EVEN BATTLE. THEY WILL STAY AT THIS GRAVEYARD FOREVER!");
         }
     }
 
