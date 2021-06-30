@@ -107,6 +107,7 @@ class MainMenu {
 
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
         Battle.battle(party1, party2, gr);
+        Battle.generateGraveyard(gr, legend);
     }
 
     // **** TWO PLAYER GAME MODE ****
@@ -153,6 +154,16 @@ class MainMenu {
         }
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
         Battle.battle(party1, party2, gr);
+        Battle.generateGraveyard(gr, legend);
+    }
+
+    // **** GENERATES RANDOM PARTIES FOR BOTH PLAYERS AND STARTS THE BATTLE ****
+    private static void generateRandomGame() {
+        playerNumber = 0;
+        generateRandomParty(party1);
+        generateRandomParty(party1, party2);
+        Battle.battle(party1, party2, gr);
+        Battle.generateGraveyard(gr, legend);
     }
 
     private static void createOwnParty() {
@@ -254,45 +265,6 @@ class MainMenu {
     private static void importParty() {
     }
 
-    // **** GENERATES RANDOM PARTIES FOR BOTH PLAYERS AND STARTS THE BATTLE ****
-    private static void generateRandomGame() {
-        Graveyard graveyard = new Graveyard(gr);
-        playerNumber = 0;
-        generateRandomParty(party1);
-        generateRandomParty(party1, party2);
-        Battle.battle(party1, party2, gr);
-        System.out.println("\n**************** A GRIM VIEW AT THE GRAVEYARD AFTER THE BATTLE! *****************\n");
-
-        for (int i = 0; i < 5; i++) {
-            System.out.print("      ");
-            for (int j = 0; j < 6; j++) {
-                System.out.print(gr[i][j] + "   "); // PRINTING GRAVES TO GRAVEYARD
-            }
-            System.out.println(legend[i]); // PRINTING LEGEND TO GRAVEYARD
-        }
-
-        // PRINTING PROPER VICTORY MESSAGE DEPENDING ON WITH PARTY WON THE BATTLE
-        if (party1.size() == 0) {
-            if (graveyard.getParty2Graveyard() == 0) {
-                System.out.println("\nPARTY 2 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSES!");
-            } else if (graveyard.getParty2Graveyard() == 1) {
-                System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty2Graveyard() + " COMPANION, PARTY 2 EMERGED VICTORIOUS FROM THIS BATTLE");
-            } else {
-                System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty2Graveyard() + " COMPANIONS, PARTY 2 EMERGED VICTORIOUS FROM THIS BATTLE");
-            }
-        } else if (party2.size() == 0) {
-            if (graveyard.getParty1Graveyard() == 0) {
-                System.out.println("\nPARTY 1 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSES!");
-            }
-            else if (graveyard.getParty1Graveyard() == 1) {
-                System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty1Graveyard() + " COMPANION, PARTY 1 EMERGED VICTORIOUS FROM THIS BATTLE");
-            }
-            else {
-                System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty1Graveyard() + " COMPANIONS, PARTY 1 EMERGED VICTORIOUS FROM THIS BATTLE");
-            }
-        }
-    }
-
     private static void getsChoice() {
 
         try {
@@ -339,5 +311,7 @@ class MainMenu {
             return randomName;
         }
     }
+
+
 
 }
