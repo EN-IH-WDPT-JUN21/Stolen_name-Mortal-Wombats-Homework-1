@@ -30,12 +30,17 @@ class MainMenu {
                     {eg, eg, eg, eg, eg, eg},
             };
 
+    static List<String> party1Died = new ArrayList<>();
+    static List<String> party2Died = new ArrayList<>();
+
     // Creating String for a graveyard legend to be displayed next to graveyard
     static String[] legend = {"  |    ======================",
             "  |     [\uD83D\uDD73] - EMPTY GRAVE",
             "  |     [💀] - PARTY 1 GRAVE",
             "  |     [\uD83D\uDC7B] - PARTY 2 GRAVE",
             "  |    ======================"};
+
+
 
     // **** MAIN MENU METHOD  - USED TO INITIALISE THE GAME ****
     public static void mainMenu() {
@@ -109,9 +114,9 @@ class MainMenu {
         } while (ch != 1 && ch != 2 && ch != 0);
 
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
-        Battle.battle(party1, party2, gr);
+        Battle.battle(party1, party2, gr, party1Died, party2Died);
         // Generate and show graveyard
-        Battle.generateGraveyard(gr, legend);
+        Battle.generateGraveyard(party1, party2, gr, legend, party1Died, party2Died);
     }
 
     // **** TWO PLAYER GAME MODE ****
@@ -157,9 +162,9 @@ class MainMenu {
             } while (ch != 1 && ch != 2 && ch != 0);
         }
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
-        Battle.battle(party1, party2, gr);
+        Battle.battle(party1, party2, gr, party1Died, party2Died);
         // Generate and show graveyard
-        Battle.generateGraveyard(gr, legend);
+        Battle.generateGraveyard(party1, party2, gr, legend, party1Died, party2Died);
     }
 
     // **** GENERATES RANDOM PARTIES FOR BOTH PLAYERS AND STARTS THE BATTLE ****
@@ -167,9 +172,9 @@ class MainMenu {
         playerNumber = 0;
         generateRandomParty(party1);
         generateRandomParty(party1, party2);
-        Battle.battle(party1, party2, gr);
+        Battle.battle(party1, party2, gr, party1Died, party2Died);
         // Generate and show graveyard
-        Battle.generateGraveyard(gr, legend);
+        Battle.generateGraveyard(party1, party2, gr, legend, party1Died, party2Died);
     }
 
     private static void createOwnParty() {
