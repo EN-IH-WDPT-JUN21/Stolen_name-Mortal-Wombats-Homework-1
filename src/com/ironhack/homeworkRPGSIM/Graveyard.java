@@ -1,5 +1,7 @@
 package com.ironhack.homeworkRPGSIM;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Graveyard {
@@ -17,6 +19,8 @@ public class Graveyard {
     private String[][] gr;
     static int party1_graveyard = 0;
     static int party2_graveyard = 0;
+
+
 
     // Row and column limits needed for random generator
     int randomRowMin = 0;
@@ -38,26 +42,18 @@ public class Graveyard {
         randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
         randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
 
-        int count = 0;
+        //int count = 0;
         if (gr[randomColumn][randomRow].equals(emptyGrave)) {
             gr[randomColumn][randomRow] = fullGraveParty1;
-        } else if (gr[randomColumn][randomRow].equals(fullGraveParty1)) {
+        } else {
             do {
-                count++;
-                System.out.println(count);
-                randomRow = (int) ((Math.random() * (randomRowMax - randomRowMin)) + randomRowMax);
-                randomColumn = (int) ((Math.random() * (randomColMax - randomColMin)) + randomColMax);
+                //count++;
+                //System.out.println(count);
+                randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
+                randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
                 gr[randomColumn][randomRow] = fullGraveParty1;
-            } while (gr[randomColumn][randomRow].equals(fullGraveParty1));
+            } while (!gr[randomColumn][randomRow].equals(emptyGrave));
         }
-        /*int count = 0;
-        while (!gr[randomColumn][randomRow].equals(fullGraveParty1)) {
-            count++;
-            System.out.println(count);
-            randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
-            randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
-            gr[randomColumn][randomRow] = fullGraveParty1;
-        }*/
         party1_graveyard++;
     }
 
@@ -66,28 +62,28 @@ public class Graveyard {
         randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
         randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
 
-        int count2 = 0;
+        //int count2 = 0;
         if (gr[randomColumn][randomRow].equals(emptyGrave)) {
             gr[randomColumn][randomRow] = fullGraveParty2;
-        } else if (gr[randomColumn][randomRow].equals(fullGraveParty2)) {
+        } else {
             do {
-                count2++;
-                System.out.println(count2);
+                //count2++;
+                //System.out.println(count2);
                 randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
                 randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
                 gr[randomColumn][randomRow] = fullGraveParty2;
-            } while (gr[randomColumn][randomRow].equals(fullGraveParty2));
+            } while (!gr[randomColumn][randomRow].equals(emptyGrave));
 
         }
-
-        /*while (!gr[randomColumn][randomRow].equals(fullGraveParty2)) {
-            count2++;
-            System.out.println(count2);
-            randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
-            randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
-            gr[randomColumn][randomRow] = fullGraveParty1;
-        }*/
         party2_graveyard++;
+    }
+
+    public void party1DeadCount(List<String> party1Died, Character character1Name) {
+        party1Died.add(character1Name.getName());
+    }
+
+    public void party2DeadCount(List<String> party2Died, Character character2Name) {
+        party2Died.add(character2Name.getName());
     }
 
     public int getParty1Graveyard() {
