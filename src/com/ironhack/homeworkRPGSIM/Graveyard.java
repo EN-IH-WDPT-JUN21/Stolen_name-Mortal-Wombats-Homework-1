@@ -4,22 +4,17 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Graveyard {
+
     // Different string icons that can be used when printing graveyard
-    private String cross = "[✞]";
-    private String ghost = "[\uD83D\uDC7B]";
-    private String hole = "[\uD83D\uDD73]";
-    private String skull = "[💀]";
+    private final String ghost = "[\uD83D\uDC7B]";
+    private final String hole = "[\uD83D\uDD73]";
+    private final String skull = "[💀]";
 
-    private String emptyGrave = hole;
-    private String fullGraveParty1 = skull;
-    private String fullGraveParty2 = ghost;
+    private final String emptyGrave = hole;
 
-    // Create graveyard 2D array and set graveyard for both parties to 0
-    private String[][] gr;
+    // Set graveyard for both parties to 0
     static int party1_graveyard = 0;
     static int party2_graveyard = 0;
-
-
 
     // Row and column limits needed for random generator
     int randomRowMin = 0;
@@ -31,8 +26,8 @@ public class Graveyard {
     int randomRow;
     int randomColumn;
 
-    public Graveyard(String[][] gr) {
-        this.gr = gr;
+    public Graveyard() {
+        // Create graveyard 2D array
     }
 
     // Creating graveyard for Party 1
@@ -41,16 +36,13 @@ public class Graveyard {
         randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
         randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
 
-        //int count = 0;
-        if (gr[randomColumn][randomRow].equals(emptyGrave)) {
-            gr[randomColumn][randomRow] = fullGraveParty1;
-        } else {
+        if (!gr[randomColumn][randomRow].equals(emptyGrave)) {
             do {
                 randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
                 randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
             } while (!gr[randomColumn][randomRow].equals(emptyGrave));
-            gr[randomColumn][randomRow] = fullGraveParty1;
         }
+        gr[randomColumn][randomRow] = skull;
         party1_graveyard++;
     }
 
@@ -59,16 +51,14 @@ public class Graveyard {
         randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
         randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
 
-        if (gr[randomColumn][randomRow].equals(emptyGrave)) {
-            gr[randomColumn][randomRow] = fullGraveParty2;
-        } else {
+        if (!gr[randomColumn][randomRow].equals(emptyGrave)) {
             do {
                 randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
                 randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
 
             } while (!gr[randomColumn][randomRow].equals(emptyGrave));
-            gr[randomColumn][randomRow] = fullGraveParty2;
         }
+        gr[randomColumn][randomRow] = ghost;
         party2_graveyard++;
     }
 

@@ -89,7 +89,7 @@ public class Warrior extends Character implements Attacker {
     // **** ATTACK FUNCTION ****
 
     public int attack() {
-        int damage = 0;
+        int damage;
 
         if (stamina >= 5) {
             damage = strength;

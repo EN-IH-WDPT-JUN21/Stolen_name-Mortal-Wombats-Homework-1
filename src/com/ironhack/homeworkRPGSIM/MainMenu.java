@@ -25,7 +25,7 @@ class MainMenu {
     // **** GRAVEYARD VARIABLES ****
 
     // String icon for empty grave
-    static private String eg = "[\uD83D\uDD73]";
+    static private final String eg = "[\uD83D\uDD73]";
 
     // Creating array for empty graveyard
     static String[][] gr =
@@ -152,12 +152,11 @@ class MainMenu {
                         if(playerNumber == 1) {
                             // **** THIS WILL CREATE A RANDOM PARTY OF A RANDOM SIZE FOR PLAYER 1 ****
                             generateRandomParty(party1); //addCharactersToParties(generateRandomParty());
-                            playerNumber++;
                         }else {
                             // **** THIS WILL CREATE A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                             generateRandomParty(party1, party2);
-                            playerNumber++;
                         }
+                        playerNumber++;
                         break;
                     case 3:
                         importParty(party1); //addCharactersToParties(importParty()), adds characters to party 1;
@@ -200,9 +199,11 @@ class MainMenu {
         do {
             boolean validCharacter = false; // NEEDED TO HELP VALIDATE INPUTS
 
-            System.out.println("\n What type of Character would you like to create?" +
-                    "\n 1. Warrior" +
-                    "\n 2. Wizard");
+            System.out.println("""
+
+                                       What type of Character would you like to create?
+                                       1. Warrior
+                                       2. Wizard""".indent(1));
 
             while (!validCharacter) { // NEEDED TO VALIDATE INPUTS
 
@@ -283,9 +284,6 @@ class MainMenu {
         }
     }
 
-    private static void importParty() {
-    }
-
     private static void getsChoice() {
 
         try {
@@ -335,7 +333,7 @@ class MainMenu {
 
     //**** IMPORT PARTY FROM CSV FILE ***
     private static void importParty(ArrayList party) {
-        List<Character> impCharacters = readFromCSV("ImportedParty.csv");
+        List<Character> impCharacters = readFromCSV();
 
         for (Character c : impCharacters) {
                 party.add(c);
@@ -344,9 +342,9 @@ class MainMenu {
     }
 
     //**** READ CSV FILE ****
-    private static List<Character> readFromCSV(String fileName) {
+    private static List<Character> readFromCSV() {
         List<Character> impCharacters = new ArrayList<>();
-        Path path = Paths.get(fileName);
+        Path path = Paths.get("ImportedParty.csv");
 
         try(BufferedReader read = Files.newBufferedReader(path, StandardCharsets.US_ASCII)){
             String line = read.readLine();

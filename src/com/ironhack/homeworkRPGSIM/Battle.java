@@ -12,9 +12,7 @@ public class Battle {
         Character character1 = null;
         Character character2 = null;
 
-        String eg = "[\uD83D\uDD73]"; // String for empty grave
-
-        Graveyard graveyard = new Graveyard(gr);
+        Graveyard graveyard = new Graveyard();
 
 
 
@@ -112,7 +110,7 @@ public class Battle {
     // GENERATING AND SHOWING A GRAVEYARD
     public static void generateGraveyard(ArrayList party1, ArrayList party2, String[][] gr, String[] legend,
                                          List<String> party1Died, List<String> party2Died) {
-        Graveyard graveyard = new Graveyard(gr);
+        Graveyard graveyard = new Graveyard();
 
         System.out.println("\n**************** A GRIM VIEW AT THE GRAVEYARD AFTER THE BATTLE! *****************\n");
 
