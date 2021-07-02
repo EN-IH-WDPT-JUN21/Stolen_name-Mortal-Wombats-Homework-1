@@ -127,7 +127,7 @@ public class Battle {
         }
 
         // PRINTING PROPER VICTORY MESSAGE DEPENDING ON WITH PARTY WON THE BATTLE
-        if (party1.size() == 0) {
+        if (party1.size() == 0 && party2.size() > 0) {
             if (graveyard.getParty2Graveyard() == 0) {
                 System.out.println("\nPARTY 2 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSES!");
                 System.out.println("DIED IN PARTY 1: " + party1Died);
@@ -140,7 +140,7 @@ public class Battle {
                 System.out.println("DIED IN PARTY 1: " + party1Died);
                 System.out.println("DIED IN PARTY 2: " + party2Died);
             }
-        } else if (party2.size() == 0) {
+        } else if (party2.size() == 0 && party1.size() > 0) {
             if (graveyard.getParty1Graveyard() == 0) {
                 System.out.println("\nPARTY 1 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSES!");
                 System.out.println("DIED IN PARTY 2: " + party2Died);
