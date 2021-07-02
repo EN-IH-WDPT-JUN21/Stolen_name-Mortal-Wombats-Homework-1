@@ -310,7 +310,7 @@ class MainMenu {
         names.add("Still Bill");
         names.add("Florist Gump");
         names.add("Ellen Replay");
-        names.add("Katnis Nevergreen");
+        names.add("Katniss Nevergreen");
         names.add("San Holo");
         names.add("Gary Poter");
         names.add("Determinator");
