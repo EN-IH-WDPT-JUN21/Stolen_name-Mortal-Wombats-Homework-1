@@ -13,10 +13,11 @@ import java.nio.file.Paths;
 
 class MainMenu {
 
-    // **** INITIAL VARIABLE CREATION ****
-    private static int ch =0;
+    // **** PROPERTIES DECLARATION ****
+    private static int ch = 0;
     public static int playerNumber = 1;
     private static final Scanner scanner = new Scanner(System.in);
+    private static String temporaryUserInput;
 
     // **** THESE PARTIES ARE REFERENCED THROUGHOUT ****
     static ArrayList<Character> party1 = new ArrayList<>();
@@ -52,7 +53,9 @@ class MainMenu {
     // **** MAIN MENU METHOD  - USED TO INITIALISE THE GAME ****
     public static void mainMenu() throws IOException {
 
+        System.out.println ("\n*********************************************************");
         System.out.println ("*************** WELCOME TO MORTAL WOMBATS ***************");
+        System.out.println ("*********************************************************");
         System.out.println();
         System.out.println ("Choose a game mode:");
 
@@ -61,21 +64,18 @@ class MainMenu {
             System.out.println("2 - 2 Players");
             System.out.println("3 - Generate Random Game");
 
-
+            //Gets the player choice and stores it in ch
             getsChoice();
 
-
+            //Sends the user to the method chosen
             switch (ch) {
                 case 1 -> {
-                    System.out.println("You chose 1 Player\n");
                     onePlayerGameMode();
                 }
                 case 2 -> {
-                    System.out.println("You chose 2 Players\n");
                     twoPlayerGameMode();
                 }
                 case 3 -> {
-                    System.out.println("You chose Random Game\n");
                     generateRandomGame();
                 }
                 default -> System.out.println("Please, choose a valid game mode.\n");
@@ -84,45 +84,45 @@ class MainMenu {
 
     }
 
-    // **** ONE PLAYER MENUS ****
+    // **** ONE PLAYER MENU ****
     public static void onePlayerGameMode() throws IOException {
-        System.out.println ("******************************");
-        System.out.println ("\nDo you want to create your own party or generate a random one?");
+        System.out.println ("\n*********************************************************");
+        System.out.println ("\nYou've chosen 1 Player Mode.\n(You will be competing against a random generated party).");
+        System.out.println ("\nCreate your Party:");
 
         do {
-            System.out.println ("1 - Create my own party");
-            System.out.println ("You will choose your party and your opponent's will be random.");
+            System.out.println ("1 - Create all the characters");
             System.out.println ("2 - Generate a random party");
-            System.out.println (" Both your and your opponent's parties will be random.");
             System.out.println ("3 - Import party");
-            System.out.println ("You will import your party and your opponent's will be random.");
             System.out.println ("0 - Return to Main Menu");
 
             getsChoice();
 
             switch (ch) {
                 case 1:
-                    createOwnParty(); //addCharactersToParties(createOwnParty());
-                    generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
+                    createOwnParty();
+                    generateRandomParty(party1, party2);
                     break;
                 case 2:
-                    generateRandomParty(party1); //addCharactersToParties(generateRandomParty());
-                    generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
+                    generateRandomParty(party1);
+                    generateRandomParty(party1, party2);
                     break;
                 case 3:
-                    importParty(party1); //addCharactersToParties(importParty());
-                    generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
+                    importParty(party1);
+                    generateRandomParty(party1, party2);
                     readToCSV(party1);
                     break;
                 case 0:
                     mainMenu();
                 default:
-                    System.out.println("Please, choose a valid game mode.\n");
+                    System.out.println("Please, choose a valid option.\n");
                     break;
             }
         } while (ch != 1 && ch != 2 && ch !=3);
 
-        System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
+        System.out.println("************** THE BATTLE IS ABOUT BEGIN! ************** ");
+        System.out.println("Press Enter to Start the Battle.");
+        temporaryUserInput = scanner.nextLine();
         Battle.battle(party1, party2, gr, party1Died, party2Died);
         // Generate and show graveyard
         Battle.generateGraveyard(party1, party2, gr, legend, party1Died, party2Died);
@@ -130,28 +130,34 @@ class MainMenu {
 
     // **** TWO PLAYER GAME MODE ****
     public static void twoPlayerGameMode() throws IOException {
+
+        if (playerNumber == 1) {
+            System.out.println ("\n*********************************************************");
+            System.out.println ("\nYou've chosen 2 Player Mode.\n");
+        }
+
         while(playerNumber < 3) {
-            System.out.println("******************************");
-            System.out.println("PLAYER " + playerNumber);
-            System.out.println("\nDo you want to create your own party or generate a random one?");
+
+            System.out.println("+++ MENU PLAYER " + playerNumber + " +++\n");
+            System.out.println("Create your party:");
 
             do {
-                System.out.println("1 - Create my own party");
-                System.out.println("2 - Generate a random party");
-                System.out.println("3 - Import party");
-                System.out.println("0 - Return to Main Menu");
+                System.out.println ("1 - Create all the characters");
+                System.out.println ("2 - Generate a random party");
+                System.out.println ("3 - Import party");
+                System.out.println ("0 - Return to Main Menu");
 
                 getsChoice();
 
                 switch (ch) {
                     case 1:
-                        createOwnParty(); //addCharactersToParties(createOwnParty());
+                        createOwnParty();
                         playerNumber++;
                         break;
                     case 2:
                         if(playerNumber == 1) {
                             // **** THIS WILL CREATE A RANDOM PARTY OF A RANDOM SIZE FOR PLAYER 1 ****
-                            generateRandomParty(party1); //addCharactersToParties(generateRandomParty());
+                            generateRandomParty(party1);
                         }else {
                             // **** THIS WILL CREATE A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                             generateRandomParty(party1, party2);
@@ -159,18 +165,21 @@ class MainMenu {
                         playerNumber++;
                         break;
                     case 3:
-                        importParty(party1); //addCharactersToParties(importParty()), adds characters to party 1;
+                        importParty(party1);
                         playerNumber++;
                         break;
                     case 0:
                         mainMenu();
                     default:
-                        System.out.println("Please, choose a valid game mode.\n");
+                        System.out.println("Please, choose a valid option.\n");
                         break;
                 }
             } while (ch != 1 && ch != 2 && ch !=3);
         }
+
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
+        System.out.println("Press Enter to Start the Battle.");
+        temporaryUserInput = scanner.nextLine();
         Battle.battle(party1, party2, gr, party1Died, party2Died);
         // Generate and show graveyard
         Battle.generateGraveyard(party1, party2, gr, legend, party1Died, party2Died);
@@ -188,60 +197,62 @@ class MainMenu {
 
     private static void createOwnParty() {
 
-        char ch;
-
         ArrayList<Character> party = new ArrayList<>();
 
-        System.out.println ("******************************");
-        System.out.println ("\nFor each Character, you will have to define their names and their stats.");
+        System.out.println ("*********************************************************");
+        System.out.println ("\nYou've chosen to create all the characters.\n");
 
 
         do {
-            boolean validCharacter = false; // NEEDED TO HELP VALIDATE INPUTS
-
             System.out.println("""
-
                                        What type of Character would you like to create?
                                        1. Warrior
                                        2. Wizard""".indent(1));
 
-            while (!validCharacter) { // NEEDED TO VALIDATE INPUTS
+            getsChoice();
 
-                try {
-                    int selection = scanner.nextInt();
-                        if(selection == 1) {
-                            Warrior warrior = new Warrior(); // CREATES NEW WARRIOR OBJECT WITH ONLY ID VALUE
-                            warrior.customiseWarrior(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
-                            party.add(warrior); // ADDS NEW WARRIOR TO PARTY
-                            validCharacter = true;
-                        }
-                        else if (selection == 2){
-                            Wizard wizard = new Wizard(); // CREATES NEW WIZARD OBJECT WITH ONLY ID VALUE
-                            wizard.customiseWizard(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
-                            party.add(wizard); // ADDS NEW WARRIOR TO PARTY
-                            validCharacter = true;
-                        }
-                } catch (Exception er) {
-                    System.out.println("Please input a valid number: ");
-                    scanner.next();
-                }
+            if(ch == 1) {
+                Warrior warrior = new Warrior(); // CREATES NEW WARRIOR OBJECT WITH ONLY ID VALUE
+                warrior.customiseWarrior(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
+                party.add(warrior); // ADDS NEW WARRIOR TO PARTY
+            }
+            else if (ch == 2){
+                Wizard wizard = new Wizard(); // CREATES NEW WIZARD OBJECT WITH ONLY ID VALUE
+                wizard.customiseWizard(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
+                party.add(wizard); // ADDS NEW WARRIOR TO PARTY
             }
 
-            System.out.println("Do you want to create a new character? Y/N");
-            ch = scanner.next().charAt(0);
-        } while (ch == 'Y' || ch == 'y'); // THIS NEEDS FIXING AS ANY VALUE OUTSIDE OF Y OR y MOVED FORWARDS
+            System.out.println("Do you want to create a new character?");
+            System.out.println("1 - Yes");
+            System.out.println("2 - No");
 
+            do {
+                getsChoice();
 
-        System.out.println("Your party was created with success!");
+                switch (ch) {
+                    case 1:
+                    case 2:
+                        break;
+                    default:
+                        System.out.println("Please, choose a valid option.\n");
+                        break;
+                }
+            }while(ch != 1 && ch != 2);
+
+        } while (ch != 2);
+
 
         // **** WILL ASSIGN PARTY TO EITHER PLAYER 1 (PARTY 1) OR PLAYER 2
-        if(party1.isEmpty())
+        if(party1.isEmpty()) {
             party1 = party;
+        }
         else{
             party2 = party;
         }
 
+
     }
+
     // **** RANDOMLY GENERATES PARTY SAME SIZE AS PARTY 1
     private static void generateRandomParty(ArrayList party1, ArrayList party2) {
         for (int i = 0; i < party1.size(); i++) {
@@ -257,11 +268,14 @@ class MainMenu {
             }
 
         }
+
         System.out.println("Party created with these brave adventurers: ");
         for(int i = 0; i < party2.size(); i++){
             System.out.println(party2.get(i).toString());
         }
+
     }
+
     // **** RANDOMLY GENERATES NEW PARTY WITH A RANDOM PARTY SIZE
     private static void generateRandomParty(ArrayList party1) {
         int randomPartySize = 1 + new Random().nextInt(5); // MAX PARTY SIZE SET TO 5
@@ -279,20 +293,25 @@ class MainMenu {
 
         }
         System.out.println("Party created with these brave adventurers: \n");
-        for(int i = 0; i < party1.size(); i++){
-            System.out.println(party1.get(i).toString());
+        for (Object o : party1) {
+            System.out.println(o.toString());
         }
+
     }
 
+    //**** GETS INPUT FROM USER AND STORES IT IN CH PROPERTY ****
     private static void getsChoice() {
 
-        try {
-            ch = scanner.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("Please, choose a valid game mode.\n");
-            scanner.next();
-            getsChoice();
-        }
+        do {
+            try {
+                ch = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                ch = -1;
+                System.out.println("Please, choose a valid option.\n");
+                scanner.next();
+            }
+        }while (ch == -1 );
 
     }
 
@@ -336,7 +355,7 @@ class MainMenu {
         List<Character> impCharacters = readFromCSV();
 
         for (Character c : impCharacters) {
-                party.add(c);
+            party.add(c);
         }
         System.out.println(party.size());
     }
