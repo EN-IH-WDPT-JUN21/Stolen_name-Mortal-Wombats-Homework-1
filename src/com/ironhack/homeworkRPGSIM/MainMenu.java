@@ -13,22 +13,22 @@ import java.nio.file.Paths;
 
 class MainMenu {
 
-    // **** PROPERTIES DECLARATION ****
-    private static int ch = 0;
-    public static int playerNumber = 1;
-    private static final Scanner scanner = new Scanner(System.in);
-    private static String temporaryUserInput;
+    // **** BATTLE PROPERTIES DECLARATION ****
+    private static int ch = 0; //stores the user's option choices
+    public static int playerNumber = 1; //stores the player in 2 player game mode
+    private static final Scanner scanner = new Scanner(System.in); //Scanner
 
-    // **** THESE PARTIES ARE REFERENCED THROUGHOUT ****
-    static ArrayList<Character> party1 = new ArrayList<>();
-    static ArrayList<Character> party2 = new ArrayList<>();
+    static ArrayList<Character> party1 = new ArrayList<>(); //player1 party
+    static ArrayList<Character> party2 = new ArrayList<>(); //player2 party
 
-    // **** GRAVEYARD VARIABLES ****
 
-    // String icon for empty grave
-    static private final String eg = "[\uD83D\uDD73]";
+    // **** GRAVEYARD PROPERTIES DECLARATION ****
+    static private final String eg = "[\uD83D\uDD73]";  // String icon for empty grave
 
-    // Creating array for empty graveyard
+    static List<String> party1Died = new ArrayList<>(); //list of dead characters on player1's party
+    static List<String> party2Died = new ArrayList<>(); //list of dead characters on player2's party
+
+    // Creates array for empty graveyard
     static String[][] gr =
             {
                     {eg, eg, eg, eg, eg, eg},
@@ -38,10 +38,7 @@ class MainMenu {
                     {eg, eg, eg, eg, eg, eg},
             };
 
-    static List<String> party1Died = new ArrayList<>();
-    static List<String> party2Died = new ArrayList<>();
-
-    // Creating String for a graveyard legend to be displayed next to graveyard
+    // Creates the graveyard caption
     static String[] legend = {"  |    ======================",
             "  |     [\uD83D\uDD73] - EMPTY GRAVE",
             "  |     [💀] - PARTY 1 GRAVE",
@@ -64,24 +61,28 @@ class MainMenu {
             System.out.println("2 - 2 Players");
             System.out.println("3 - Generate Random Game");
 
-            //Gets the player choice and stores it in ch
-            getsChoice();
+            getsChoice(); //Gets the player choice and stores it in ch property
 
             //Sends the user to the method chosen
             switch (ch) {
                 case 1 -> {
                     onePlayerGameMode();
+                    break;
                 }
                 case 2 -> {
                     twoPlayerGameMode();
+                    break;
                 }
                 case 3 -> {
                     generateRandomGame();
+                    break;
                 }
                 default -> System.out.println("Please, choose a valid game mode.\n");
             }
         } while (ch != 1 && ch != 2 && ch != 3);
 
+        scanner.close();
+        System.exit(0);
     }
 
     // **** ONE PLAYER MENU ****
@@ -96,20 +97,28 @@ class MainMenu {
             System.out.println ("3 - Import party");
             System.out.println ("0 - Return to Main Menu");
 
-            getsChoice();
+            getsChoice(); //Gets the player choice and stores it in ch property
 
+            //Sends the user to the method chosen
             switch (ch) {
                 case 1:
+                    // **** USER CHOOSES NAMES AND STATS FOR EACH CHARACTER ****
                     createOwnParty();
+                    // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
                     break;
                 case 2:
+                    // **** CREATES A RANDOM PARTY OF A RANDOM SIZE FOR PLAYER 1 ****
                     generateRandomParty(party1);
+                    // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
                     break;
                 case 3:
+                    // **** USER IMPORTS PARTY FROM CSV FILE ****
                     importParty(party1);
+                    // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
+                    // **** THIS WILL CREATE A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     readToCSV(party1);
                     break;
                 case 0:
@@ -122,22 +131,25 @@ class MainMenu {
 
         System.out.println("************** THE BATTLE IS ABOUT BEGIN! ************** ");
         System.out.println("Press Enter to Start the Battle.");
-        temporaryUserInput = scanner.nextLine();
+        scanner.nextLine();
+
+
         Battle.battle(party1, party2, gr, party1Died, party2Died);
-        // Generate and show graveyard
+        // Generates and shows graveyard
         Battle.generateGraveyard(party1, party2, gr, legend, party1Died, party2Died);
     }
 
     // **** TWO PLAYER GAME MODE ****
     public static void twoPlayerGameMode() throws IOException {
 
+        //Prevents that the message is shown befrore Player2's Menu
         if (playerNumber == 1) {
             System.out.println ("\n*********************************************************");
             System.out.println ("\nYou've chosen 2 Player Mode.\n");
         }
 
+        //Shows the Menu for Player 1 and repeats for Player 2
         while(playerNumber < 3) {
-
             System.out.println("+++ MENU PLAYER " + playerNumber + " +++\n");
             System.out.println("Create your party:");
 
@@ -147,24 +159,26 @@ class MainMenu {
                 System.out.println ("3 - Import party");
                 System.out.println ("0 - Return to Main Menu");
 
-                getsChoice();
+                getsChoice(); //Gets the player choice and stores it in ch property
 
                 switch (ch) {
                     case 1:
+                        // **** USER CHOOSES NAMES AND STATS FOR EACH CHARACTER ****
                         createOwnParty();
                         playerNumber++;
                         break;
                     case 2:
                         if(playerNumber == 1) {
-                            // **** THIS WILL CREATE A RANDOM PARTY OF A RANDOM SIZE FOR PLAYER 1 ****
+                            // **** CREATES A RANDOM PARTY OF A RANDOM SIZE FOR PLAYER 1 ****
                             generateRandomParty(party1);
                         }else {
-                            // **** THIS WILL CREATE A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
+                            // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                             generateRandomParty(party1, party2);
                         }
                         playerNumber++;
                         break;
                     case 3:
+                        // **** USER IMPORTS PARTY FROM CSV FILE ****
                         importParty(party1);
                         playerNumber++;
                         break;
@@ -179,7 +193,8 @@ class MainMenu {
 
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
         System.out.println("Press Enter to Start the Battle.");
-        temporaryUserInput = scanner.nextLine();
+        scanner.nextLine();
+
         Battle.battle(party1, party2, gr, party1Died, party2Died);
         // Generate and show graveyard
         Battle.generateGraveyard(party1, party2, gr, legend, party1Died, party2Died);
@@ -191,8 +206,9 @@ class MainMenu {
         generateRandomParty(party1);
         generateRandomParty(party1, party2);
         Battle.battle(party1, party2, gr, party1Died, party2Died);
-        // Generate and show graveyard
+        // Generates and shows graveyard
         Battle.generateGraveyard(party1, party2, gr, legend, party1Died, party2Died);
+
     }
 
     private static void createOwnParty() {
@@ -209,7 +225,7 @@ class MainMenu {
                                        1. Warrior
                                        2. Wizard""".indent(1));
 
-            getsChoice();
+            getsChoice(); //Gets the player choice and stores it in ch property
 
             if(ch == 1) {
                 Warrior warrior = new Warrior(); // CREATES NEW WARRIOR OBJECT WITH ONLY ID VALUE
@@ -227,7 +243,7 @@ class MainMenu {
             System.out.println("2 - No");
 
             do {
-                getsChoice();
+                getsChoice(); //Gets the player choice and stores it in ch property
 
                 switch (ch) {
                     case 1:
