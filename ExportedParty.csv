@@ -1,10 +1,2 @@
-Wizard: Merlin
- HP: 60
- Mana: 10
- Intelligence: 10
-
-Warrior: Java the Hut
- HP: 100
- Stamina: 35
- Strength: 10
-
+2,Sauron,100,50,25
+2,Merlin,100,50,25
