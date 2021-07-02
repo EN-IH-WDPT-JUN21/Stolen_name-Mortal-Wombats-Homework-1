@@ -42,10 +42,10 @@ class MainMenu {
 
     // Creating String for a graveyard legend to be displayed next to graveyard
     static String[] legend = {"  |    ======================",
-            "  |     [\uD83D\uDD73] - EMPTY GRAVE",
-            "  |     [💀] - PARTY 1 GRAVE",
-            "  |     [\uD83D\uDC7B] - PARTY 2 GRAVE",
-            "  |    ======================"};
+                              "  |     [\uD83D\uDD73] - EMPTY GRAVE",
+                              "  |     [💀] - PARTY 1 GRAVE",
+                              "  |     [\uD83D\uDC7B] - PARTY 2 GRAVE",
+                              "  |    ======================"};
 
 
 
