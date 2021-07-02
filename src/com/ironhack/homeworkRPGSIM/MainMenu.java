@@ -106,13 +106,15 @@ class MainMenu {
                     createOwnParty();
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
-                    //readToCSV(party1);
+                    readToCSV(party1);
                     break;
                 case 2:
                     // **** CREATES A RANDOM PARTY OF A RANDOM SIZE FOR PLAYER 1 ****
                     generateRandomParty(party1);
+                    readToCSV(party1);
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
+                    readToCSV(party2);
                     break;
                 case 3:
                     // **** USER IMPORTS PARTY FROM CSV FILE ****
@@ -382,12 +384,13 @@ class MainMenu {
     //**** READ CSV FILE ****
     private static List<Character> readFromCSV(String s) {
         List<Character> impCharacters = new ArrayList<>();
-        Path path = Paths.get("ImportedParty.csv");
+        Path path = Paths.get("ExportedParty.csv");
 
         try(BufferedReader read = Files.newBufferedReader(path, StandardCharsets.US_ASCII)){
             String line = read.readLine();
                 while (line != null) {
-                    String[] impStats = line.split(",");
+                    //String[] impStats = line.trim().split(",");
+                    String[] impStats = line.trim().split(",  ");
                     Character ch1 = createCharacter(impStats);
                     impCharacters.add(ch1);
                     line = read.readLine();
@@ -472,19 +475,19 @@ class MainMenu {
         FileWriter writer = new FileWriter("ExportedParty.csv", true);
         for(int r = 0; r < party.size(); r++){
             String str = String.valueOf(party.get(r));
-            str = str.replace(" ","");
+            //str = str.replace(" ","");
             if(str.contains("Warrior")){
                 str = str.replace("Warrior:","");
                 str = str.replace("HP:","");
                 str = str.replace("Stamina:","");
                 str = str.replace("Strength:","");
-                str = "1,"+str.replace("\n", ",");
+                str = "1, "+str.replace("\n", ",");
             } else if (str.contains("Wizard")){
                 str = str.replace("Wizard:","");
                 str = str.replace("HP:","");
                 str = str.replace("Mana:","");
                 str = str.replace("Intelligence:","");
-                str = "2," + str.replace("\n", ",");
+                str = "2, " + str.replace("\n", ",");
             }
             writer.append(str.substring(0, str.length() -1));
             writer.append("\n");
