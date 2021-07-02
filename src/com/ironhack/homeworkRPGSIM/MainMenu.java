@@ -1,13 +1,20 @@
 package com.ironhack.homeworkRPGSIM;
 
 
+import java.io.FileWriter;
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 class MainMenu {
 
     // **** INITIAL VARIABLE CREATION ****
-    private static int ch = 0;
+    private static int ch =0;
     public static int playerNumber = 1;
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -43,7 +50,7 @@ class MainMenu {
 
 
     // **** MAIN MENU METHOD  - USED TO INITIALISE THE GAME ****
-    public static void mainMenu() {
+    public static void mainMenu() throws IOException {
 
         System.out.println ("*************** WELCOME TO MORTAL WOMBATS ***************");
         System.out.println();
@@ -78,7 +85,7 @@ class MainMenu {
     }
 
     // **** ONE PLAYER MENUS ****
-    public static void onePlayerGameMode() {
+    public static void onePlayerGameMode() throws IOException {
         System.out.println ("******************************");
         System.out.println ("\nDo you want to create your own party or generate a random one?");
 
@@ -103,15 +110,17 @@ class MainMenu {
                     generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
                     break;
                 case 3:
-                    importParty(); //addCharactersToParties(importParty());
+                    importParty(party1); //addCharactersToParties(importParty());
                     generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
+                    //readToCSV(party1);
+                    break;
                 case 0:
                     mainMenu();
                 default:
                     System.out.println("Please, choose a valid game mode.\n");
                     break;
             }
-        } while (ch != 1 && ch != 2 && ch != 0);
+        } while (ch != 1 && ch != 2 && ch !=3);
 
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
         Battle.battle(party1, party2, gr, party1Died, party2Died);
@@ -120,7 +129,7 @@ class MainMenu {
     }
 
     // **** TWO PLAYER GAME MODE ****
-    public static void twoPlayerGameMode() {
+    public static void twoPlayerGameMode() throws IOException {
         while(playerNumber < 3) {
             System.out.println("******************************");
             System.out.println("PLAYER " + playerNumber);
@@ -151,15 +160,16 @@ class MainMenu {
                         }
                         break;
                     case 3:
-                        importParty(); //addCharactersToParties(importParty());
+                        importParty(party1); //addCharactersToParties(importParty()), adds characters to party 1;
                         playerNumber++;
+                        break;
                     case 0:
                         mainMenu();
                     default:
                         System.out.println("Please, choose a valid game mode.\n");
                         break;
                 }
-            } while (ch != 1 && ch != 2 && ch != 0);
+            } while (ch != 1 && ch != 2 && ch !=3);
         }
         System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
         Battle.battle(party1, party2, gr, party1Died, party2Died);
@@ -237,11 +247,11 @@ class MainMenu {
             int randomNum = new Random().nextInt(2);
             if (randomNum == 0) {
                 Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 +
-                        new Random().nextInt(40), 1 + new Random().nextInt(49));
+                        new Random().nextInt(41), 1 + new Random().nextInt(50));
                 party2.add(wizard1);
             } else {
                 Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(100), 10 +
-                        new Random().nextInt(40), 1 + new Random().nextInt(9));
+                        new Random().nextInt(41), 1 + new Random().nextInt(10));
                 party2.add(warrior1);
             }
 
@@ -257,11 +267,11 @@ class MainMenu {
         for (int i = 0; i < randomPartySize; i++) {
             int randomNum = new Random().nextInt(2);
             if (randomNum == 0) {
-                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(51), 10 + new
+                Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 + new
                         Random().nextInt(41), 1 + new Random().nextInt(50));
                 party1.add(wizard1);
             } else {
-                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(101), 10 +
+                Warrior warrior1 = new Warrior(randomName(), 100 + new Random().nextInt(100), 10 +
                         new Random().nextInt(41), 1 + new Random().nextInt(10));
                 party1.add(warrior1);
             }
@@ -321,6 +331,114 @@ class MainMenu {
         }else {
             return randomName;
         }
+    }
+
+    //**** IMPORT PARTY FROM CSV FILE ***
+    private static void importParty(ArrayList party) {
+        List<Character> impCharacters = readFromCSV("Stolen_name-Mortal-Wombats-Homework-1/ImportedParty.csv");
+
+        for (Character c : impCharacters) {
+                party.add(c);
+        }
+        System.out.println(party.size());
+    }
+
+    //**** READ CSV FILE ****
+    private static List<Character> readFromCSV(String fileName) {
+        List<Character> impCharacters = new ArrayList<>();
+        Path path = Paths.get(fileName);
+
+        try(BufferedReader read = Files.newBufferedReader(path, StandardCharsets.US_ASCII)){
+            String line = read.readLine();
+                while (line != null) {
+                    String[] impStats = line.split(",");
+                    Character ch1 = createCharacter(impStats);
+                    impCharacters.add(ch1);
+                    line = read.readLine();
+                   }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return impCharacters;
+    }
+
+    //**** CREATE WIZARD FROM STRING ARRAY ****
+    private static Character createCharacter(String[] metadata) {
+        int type = Integer.parseInt(metadata[0]);
+        int id = Integer.parseInt(metadata[1]);
+        String name = metadata[2];
+        int hp = Integer.parseInt(metadata[3]);
+        int mana = Integer.parseInt(metadata[4]);
+        int intelligence = Integer.parseInt(metadata[5]);
+        int stamina = Integer.parseInt(metadata[4]);
+        int strength = Integer.parseInt(metadata[5]);
+
+        if (type == 1) {
+            if (hp >= 50 && hp <= 100) {
+                hp = hp;
+            } else if (hp < 50) {
+                hp = 50;
+            } else {
+                hp = 100;
+            }
+        } else if(type == 2){
+            if (hp >= 100 && hp <= 200) {
+                hp = hp;
+            } else if (hp < 100) {
+                hp = 100;
+            } else {
+                hp = 200;
+            }
+        }
+
+        if (mana >= 10 && mana <= 50) {
+            mana = mana;
+        } else if (mana < 10) {
+            mana = 10;
+        } else {
+            mana = 50;
+        }
+
+        if (intelligence >= 1 && intelligence <= 50) {
+            intelligence = intelligence;
+        } else if (intelligence < 1) {
+            intelligence = 1;
+        } else {
+            intelligence = 50;
+        }
+
+        if (stamina >= 10 && stamina <= 50) {
+            stamina = stamina;
+        } else if (stamina < 10) {
+            stamina = 10;
+        } else {
+            stamina = 50;
+        }
+
+        if (strength >= 1 && strength <= 10) {
+            strength = strength;
+        } else if (strength < 1) {
+            strength = 1;
+        } else {
+            strength = 10;
+        }
+
+        if(type == 1) {
+            return new Wizard(name, hp, mana, intelligence);
+        } else {
+            return new Warrior(name, hp, stamina, strength);
+        }
+    }
+
+    //**** EXPORT PARTY TO CSV FILE ****
+    public static void readToCSV(ArrayList party) throws IOException {
+        FileWriter writer = new FileWriter("ExportedParty.csv", true);
+        for(int r = 0; r < party.size(); r++){
+            writer.append(String.valueOf(party.get(r)));
+            writer.append("\n");
+        }
+        writer.close();
+
     }
 
 }
