@@ -168,4 +168,5 @@ public class Warrior extends Character implements Attacker {
         System.out.println("Brave new Warrior " + getName() + " joins the party, they have a hp of " + getHp() +
                 " a stamina of " + getStamina() + " and a strength of " + getStrength());
     }
+
 }
