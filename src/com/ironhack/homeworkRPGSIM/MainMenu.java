@@ -112,7 +112,7 @@ class MainMenu {
                 case 3:
                     importParty(party1); //addCharactersToParties(importParty());
                     generateRandomParty(party1, party2); //addCharactersToParties(generateRandomParty());
-                    //readToCSV(party1);
+                    readToCSV(party1);
                     break;
                 case 0:
                     mainMenu();
@@ -335,7 +335,7 @@ class MainMenu {
 
     //**** IMPORT PARTY FROM CSV FILE ***
     private static void importParty(ArrayList party) {
-        List<Character> impCharacters = readFromCSV("Stolen_name-Mortal-Wombats-Homework-1/ImportedParty.csv");
+        List<Character> impCharacters = readFromCSV("ImportedParty.csv");
 
         for (Character c : impCharacters) {
                 party.add(c);
