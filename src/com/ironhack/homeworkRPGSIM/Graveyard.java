@@ -1,64 +1,74 @@
 package com.ironhack.homeworkRPGSIM;
 
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Graveyard {
-    private String cross = "[✞]";
-    private String ghost = "[\uD83D\uDC7B]";
-    private String hole = "\uD83D\uDD73";
-    private String skull = "[💀]";
 
-    private String emptyGrave = "[🕳]";
-    private String fullGraveParty1 = skull;
-    private String fullGraveParty2 = ghost;
+    // Different string icons that can be used when printing graveyard
+    private final String ghost = "[\uD83D\uDC7B]";
+    private final String hole = "[\uD83D\uDD73]";
+    private final String skull = "[💀]";
 
-    private String[][] graveyardArray;
+    private final String emptyGrave = hole;
+
+    // Set graveyard for both parties to 0
     static int party1_graveyard = 0;
     static int party2_graveyard = 0;
 
+    // Row and column limits needed for random generator
     int randomRowMin = 0;
-    int randomRowMax = 9;
+    int randomRowMax = 5;
     int randomColMin = 0;
     int randomColMax = 4;
 
-    int randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
-    int randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
+    // Initializing random row and column
+    int randomRow;
+    int randomColumn;
 
-    public Graveyard(String[][] graveyardArray) {
-        this.graveyardArray = graveyardArray;
+    public Graveyard() {
+        // Create graveyard 2D array
     }
 
-    public void addGraveParty1(String[][] graveyardArray) {
+    // Creating graveyard for Party 1
+    public void addGraveParty1(String[][] gr) {
 
         randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
         randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
 
-        if (graveyardArray[randomColumn][randomRow].equals(emptyGrave)) {
-            graveyardArray[randomColumn][randomRow] = fullGraveParty1;
-        } else if (graveyardArray[randomColumn][randomRow].equals(fullGraveParty1)) {
-            //while (graveyardArray[randomColumn][randomRow].equals(fullGraveParty1)) {
+        if (!gr[randomColumn][randomRow].equals(emptyGrave)) {
+            do {
                 randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
                 randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
-                graveyardArray[randomColumn][randomRow] = fullGraveParty1;
-            }
-        party1_graveyard ++;
+            } while (!gr[randomColumn][randomRow].equals(emptyGrave));
         }
+        gr[randomColumn][randomRow] = skull;
+        party1_graveyard++;
+    }
 
-    public void addGraveParty2(String[][] graveyardArray) {
+    public void addGraveParty2(String[][] gr) {
 
         randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
         randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
 
-        if (graveyardArray[randomColumn][randomRow].equals(emptyGrave)) {
-            graveyardArray[randomColumn][randomRow] = fullGraveParty2;
-        } else if (graveyardArray[randomColumn][randomRow].equals(fullGraveParty2)) {
-            //while (graveyardArray[randomColumn][randomRow].equals(fullGraveParty2)) {
+        if (!gr[randomColumn][randomRow].equals(emptyGrave)) {
+            do {
                 randomRow = ThreadLocalRandom.current().nextInt(randomRowMin, randomRowMax + 1);
                 randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
-                graveyardArray[randomColumn][randomRow] = fullGraveParty2;
-            }
-        party2_graveyard ++;
+
+            } while (!gr[randomColumn][randomRow].equals(emptyGrave));
         }
+        gr[randomColumn][randomRow] = ghost;
+        party2_graveyard++;
+    }
+
+    public void party1DeadCount(List<String> party1Died, Character character1Name) {
+        party1Died.add(character1Name.getName());
+    }
+
+    public void party2DeadCount(List<String> party2Died, Character character2Name) {
+        party2Died.add(character2Name.getName());
+    }
 
     public int getParty1Graveyard() {
         return party1_graveyard;
@@ -68,8 +78,4 @@ public class Graveyard {
         return party2_graveyard;
     }
 
-
-    public String[][] getGraveyardArray() {
-        return graveyardArray;
-    }
 }

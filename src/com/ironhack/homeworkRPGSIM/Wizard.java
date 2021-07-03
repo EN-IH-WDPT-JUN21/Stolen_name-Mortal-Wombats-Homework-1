@@ -90,7 +90,7 @@ public class Wizard extends Character implements Attacker{
     // **** ATTACK FUNCTION ****
 
     public int attack() {
-        int damage=0;
+        int damage;
 
         if(mana>=5){
             damage = intelligence;
