@@ -377,7 +377,6 @@ class MainMenu {
         for (Character c : impCharacters) {
             party.add(c);
         }
-        System.out.println(party.size());
     }
 
     //**** READ CSV FILE ****
