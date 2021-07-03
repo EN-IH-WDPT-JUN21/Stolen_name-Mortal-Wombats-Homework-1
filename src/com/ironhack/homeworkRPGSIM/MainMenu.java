@@ -235,6 +235,8 @@ class MainMenu {
             else if (ch == 2){
                 Wizard wizard = new Wizard(); // CREATES NEW WIZARD OBJECT WITH ONLY ID VALUE
                 wizard.customiseWizard(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
+
+
                 party.add(wizard); // ADDS NEW WARRIOR TO PARTY
             }
 
