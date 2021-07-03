@@ -106,23 +106,22 @@ class MainMenu {
                     createOwnParty();
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
-                    readToCSV(party1);
                     break;
                 case 2:
                     // **** CREATES A RANDOM PARTY OF A RANDOM SIZE FOR PLAYER 1 ****
                     generateRandomParty(party1);
-                    readToCSV(party1);
+                    //readToCSV(party1, 1);
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
-                    readToCSV(party2);
+                    //readToCSV(party2, 2);
                     break;
                 case 3:
                     // **** USER IMPORTS PARTY FROM CSV FILE ****
-                    importParty(party1);
+                    importParty(party1, 1);
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
                     // **** THIS WILL CREATE A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
-                    readToCSV(party1);
+                    //readToCSV(party1);
                     break;
                 case 0:
                     mainMenu();
@@ -182,7 +181,7 @@ class MainMenu {
                         break;
                     case 3:
                         // **** USER IMPORTS PARTY FROM CSV FILE ****
-                        importParty(party1);
+                        importParty(party1, playerNumber);
                         playerNumber++;
                         break;
                     case 0:
@@ -268,7 +267,7 @@ class MainMenu {
         else{
             party2 = party;
         }
-        readToCSV(party1);
+        readToCSV(party1, playerNumber);
 
 
 
@@ -372,8 +371,8 @@ class MainMenu {
     }
 
     //**** IMPORT PARTY FROM CSV FILE ***
-    private static void importParty(ArrayList party) {
-        List<Character> impCharacters = readFromCSV("ExportedParty.csv");
+    private static void importParty(ArrayList party, int n) {
+        List<Character> impCharacters = readFromCSV("ExportedParty"+n+".csv", n);
 
         for (Character c : impCharacters) {
             party.add(c);
@@ -382,14 +381,13 @@ class MainMenu {
     }
 
     //**** READ CSV FILE ****
-    private static List<Character> readFromCSV(String s) {
+    private static List<Character> readFromCSV(String s, int n) {
         List<Character> impCharacters = new ArrayList<>();
-        Path path = Paths.get("ExportedParty.csv");
+        Path path = Paths.get("ExportedParty"+n+".csv");
 
         try(BufferedReader read = Files.newBufferedReader(path, StandardCharsets.US_ASCII)){
             String line = read.readLine();
                 while (line != null) {
-                    //String[] impStats = line.trim().split(",");
                     String[] impStats = line.trim().split(",  ");
                     Character ch1 = createCharacter(impStats);
                     impCharacters.add(ch1);
@@ -471,23 +469,22 @@ class MainMenu {
     }
 
     //**** EXPORT PARTY TO CSV FILE ****
-    public static void readToCSV(ArrayList party) throws IOException {
-        FileWriter writer = new FileWriter("ExportedParty.csv", true);
+    public static void readToCSV(ArrayList party, int n) throws IOException {
+        FileWriter writer = new FileWriter("ExportedParty"+n+".csv", true);
         for(int r = 0; r < party.size(); r++){
             String str = String.valueOf(party.get(r));
-            //str = str.replace(" ","");
             if(str.contains("Warrior")){
                 str = str.replace("Warrior:","");
                 str = str.replace("HP:","");
                 str = str.replace("Stamina:","");
                 str = str.replace("Strength:","");
-                str = "1, "+str.replace("\n", ",");
+                str = "1, "+str;
             } else if (str.contains("Wizard")){
                 str = str.replace("Wizard:","");
                 str = str.replace("HP:","");
                 str = str.replace("Mana:","");
                 str = str.replace("Intelligence:","");
-                str = "2, " + str.replace("\n", ",");
+                str = "2, " + str;
             }
             writer.append(str.substring(0, str.length() -1));
             writer.append("\n");

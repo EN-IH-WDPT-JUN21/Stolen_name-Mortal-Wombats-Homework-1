@@ -110,9 +110,9 @@ public class Warrior extends Character implements Attacker {
     @Override
     public String toString() {
         return "Warrior: " + name +
-                "\n HP: " + hp +
-                "\n Stamina: " + stamina +
-                "\n Strength: " + strength + "\n";
+                ", HP: " + hp +
+                ", Stamina: " + stamina +
+                ", Strength: " + strength + "\n";
     }
 
 
