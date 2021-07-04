@@ -63,7 +63,7 @@ public class Battle {
                     graveyard.party1DeadCount(party1Died, character1);
                     party1.remove(character1);
                 } else {
-                    System.out.println(character1.getName() + " has " + character1.hp + " hp remaining");
+                    System.out.println(character1.getName() + " has " + character1.hp + " hp remaining.");
                 }
                 if (character2.hp <= 0) {
                     character2.setAlive(false);
@@ -74,7 +74,7 @@ public class Battle {
                     graveyard.party2DeadCount(party2Died, character2);
                     party2.remove(character2);
                 } else {
-                    System.out.println(character2.getName() + " has " + character2.hp + " hp remaining");
+                    System.out.println(character2.getName() + " has " + character2.hp + " hp remaining.");
                 }
                 round++;
             }
@@ -87,9 +87,9 @@ public class Battle {
 
 
             int characterNumber = 1;
-            System.out.println("Choose who you would like to send into battle? \n ");
+            System.out.println("\nChoose who you would like to send into battle? ");
             for (int i = 0; i < party.size(); i++) {
-                System.out.println(characterNumber + " " + party.get(i));
+                System.out.println(characterNumber + " - " + party.get(i));
                 characterNumber++;
             }
             boolean validSelection = false;
@@ -99,7 +99,7 @@ public class Battle {
                     character1 = (Character) party.get(selection - 1);
                     validSelection = true;
                 } catch (Exception e) {
-                    System.out.println("Please, Choose a valid character number \n");
+                    System.out.println("Please, choose a valid character number. \n");
                     scanner.next();
                 }
             }
@@ -127,36 +127,36 @@ public class Battle {
         // PRINTING PROPER VICTORY MESSAGE DEPENDING ON WITH PARTY WON THE BATTLE
         if (party1.size() == 0 && party2.size() > 0) {
             if (graveyard.getParty2Graveyard() == 0) {
-                System.out.println("\nPARTY 2 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSES!");
-                System.out.println("DIED IN PARTY 1: " + party1Died);
+                System.out.println("\nPARTY 2 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSSES!");
+                System.out.println("Died in Party 1: " + party1Died);
             } else if (graveyard.getParty2Graveyard() == 1) {
                 System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty2Graveyard() + " COMPANION, PARTY 2 EMERGED VICTORIOUS FROM THIS BATTLE!");
-                System.out.println("DIED IN PARTY 1: " + party1Died);
-                System.out.println("DIED IN PARTY 2: " + party2Died);
+                System.out.println("Died in Party 1: " + party1Died);
+                System.out.println("Died in Party 2: " + party2Died);
             } else {
                 System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty2Graveyard() + " COMPANIONS, PARTY 2 EMERGED VICTORIOUS FROM THIS BATTLE!");
-                System.out.println("DIED IN PARTY 1: " + party1Died);
-                System.out.println("DIED IN PARTY 2: " + party2Died);
+                System.out.println("Died in Party 1: " + party1Died);
+                System.out.println("Died in Party 2: " + party2Died);
             }
         } else if (party2.size() == 0 && party1.size() > 0) {
             if (graveyard.getParty1Graveyard() == 0) {
-                System.out.println("\nPARTY 1 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSES!");
-                System.out.println("DIED IN PARTY 2: " + party2Died);
+                System.out.println("\nPARTY 1 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSSES!");
+                System.out.println("Died in Party PARTY 2: " + party2Died);
             }
             else if (graveyard.getParty1Graveyard() == 1) {
                 System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty1Graveyard() + " COMPANION, PARTY 1 EMERGED VICTORIOUS FROM THIS BATTLE!");
-                System.out.println("DIED IN PARTY 1: " + party1Died);
-                System.out.println("DIED IN PARTY 2: " + party2Died);
+                System.out.println("Died in Party PARTY 1: " + party1Died);
+                System.out.println("Died in Party PARTY 2: " + party2Died);
             }
             else {
                 System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty1Graveyard() + " COMPANIONS, PARTY 1 EMERGED VICTORIOUS FROM THIS BATTLE!");
-                System.out.println("DIED IN PARTY 1: " + party1Died);
-                System.out.println("DIED IN PARTY 2: " + party2Died);
+                System.out.println("Died in Party PARTY 1: " + party1Died);
+                System.out.println("Died in Party PARTY 2: " + party2Died);
             }
         } else if (party1.size() == 0 && party2.size() == 0) {
             System.out.println("ALL BRAVE ADVENTURERS DIED IN THIS EVEN BATTLE. THEY WILL STAY AT THIS GRAVEYARD FOREVER!");
-            System.out.println("DIED IN PARTY 1: " + party1Died);
-            System.out.println("DIED IN PARTY 2: " + party2Died);
+            System.out.println("Died in Party PARTY 1: " + party1Died);
+            System.out.println("Died in Party PARTY 2: " + party2Died);
         }
     }
 
