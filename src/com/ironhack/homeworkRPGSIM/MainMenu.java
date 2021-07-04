@@ -110,16 +110,18 @@ class MainMenu {
                 case 2:
                     // **** CREATES A RANDOM PARTY OF A RANDOM SIZE FOR PLAYER 1 ****
                     generateRandomParty(party1);
+                    //readToCSV(party1, 1);
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
+                    //readToCSV(party2, 2);
                     break;
                 case 3:
                     // **** USER IMPORTS PARTY FROM CSV FILE ****
-                    importParty(party1);
+                    importParty(party1, 1);
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
                     // **** THIS WILL CREATE A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
-                    readToCSV(party1);
+                    //readToCSV(party1);
                     break;
                 case 0:
                     mainMenu();
@@ -179,7 +181,7 @@ class MainMenu {
                         break;
                     case 3:
                         // **** USER IMPORTS PARTY FROM CSV FILE ****
-                        importParty(party1);
+                        importParty(party1, playerNumber);
                         playerNumber++;
                         break;
                     case 0:
@@ -211,7 +213,7 @@ class MainMenu {
 
     }
 
-    private static void createOwnParty() {
+    private static void createOwnParty() throws IOException {
 
         ArrayList<Character> party = new ArrayList<>();
 
@@ -267,6 +269,8 @@ class MainMenu {
         else{
             party2 = party;
         }
+        readToCSV(party1, playerNumber);
+
 
 
     }
@@ -369,24 +373,23 @@ class MainMenu {
     }
 
     //**** IMPORT PARTY FROM CSV FILE ***
-    private static void importParty(ArrayList party) {
-        List<Character> impCharacters = readFromCSV();
+    private static void importParty(ArrayList party, int n) {
+        List<Character> impCharacters = readFromCSV("ExportedParty"+n+".csv", n);
 
         for (Character c : impCharacters) {
             party.add(c);
         }
-        System.out.println(party.size());
     }
 
     //**** READ CSV FILE ****
-    private static List<Character> readFromCSV() {
+    private static List<Character> readFromCSV(String s, int n) {
         List<Character> impCharacters = new ArrayList<>();
-        Path path = Paths.get("ImportedParty.csv");
+        Path path = Paths.get("ExportedParty"+n+".csv");
 
         try(BufferedReader read = Files.newBufferedReader(path, StandardCharsets.US_ASCII)){
             String line = read.readLine();
                 while (line != null) {
-                    String[] impStats = line.split(",");
+                    String[] impStats = line.trim().split(",  ");
                     Character ch1 = createCharacter(impStats);
                     impCharacters.add(ch1);
                     line = read.readLine();
@@ -400,15 +403,16 @@ class MainMenu {
     //**** CREATE WIZARD FROM STRING ARRAY ****
     private static Character createCharacter(String[] metadata) {
         int type = Integer.parseInt(metadata[0]);
-        int id = Integer.parseInt(metadata[1]);
-        String name = metadata[2];
-        int hp = Integer.parseInt(metadata[3]);
-        int mana = Integer.parseInt(metadata[4]);
-        int intelligence = Integer.parseInt(metadata[5]);
-        int stamina = Integer.parseInt(metadata[4]);
-        int strength = Integer.parseInt(metadata[5]);
+        //int id = Integer.parseInt(metadata[1]);
+        String name = metadata[1];
+        int hp = Integer.parseInt(metadata[2]);
+        int mana = Integer.parseInt(metadata[3]);
+        int intelligence = Integer.parseInt(metadata[4]);
+        int stamina = Integer.parseInt(metadata[3]);
+        int strength = Integer.parseInt(metadata[4]);
 
-        if (type == 1) {
+        //to ensure the same limits apply regardless of the data in the import file
+        if (type == 2) {
             if (hp >= 50 && hp <= 100) {
                 hp = hp;
             } else if (hp < 50) {
@@ -416,7 +420,7 @@ class MainMenu {
             } else {
                 hp = 100;
             }
-        } else if(type == 2){
+        } else if(type == 1){
             if (hp >= 100 && hp <= 200) {
                 hp = hp;
             } else if (hp < 100) {
@@ -458,7 +462,7 @@ class MainMenu {
             strength = 10;
         }
 
-        if(type == 1) {
+        if(type == 2) {
             return new Wizard(name, hp, mana, intelligence);
         } else {
             return new Warrior(name, hp, stamina, strength);
@@ -466,14 +470,27 @@ class MainMenu {
     }
 
     //**** EXPORT PARTY TO CSV FILE ****
-    public static void readToCSV(ArrayList party) throws IOException {
-        FileWriter writer = new FileWriter("ExportedParty.csv", true);
+    public static void readToCSV(ArrayList party, int n) throws IOException {
+        FileWriter writer = new FileWriter("ExportedParty"+n+".csv", true);
         for(int r = 0; r < party.size(); r++){
-            writer.append(String.valueOf(party.get(r)));
+            String str = String.valueOf(party.get(r));
+            if(str.contains("Warrior")){
+                str = str.replace("Warrior:","");
+                str = str.replace("HP:","");
+                str = str.replace("Stamina:","");
+                str = str.replace("Strength:","");
+                str = "1, "+str;
+            } else if (str.contains("Wizard")){
+                str = str.replace("Wizard:","");
+                str = str.replace("HP:","");
+                str = str.replace("Mana:","");
+                str = str.replace("Intelligence:","");
+                str = "2, " + str;
+            }
+            writer.append(str.substring(0, str.length() -1));
             writer.append("\n");
         }
         writer.close();
-
     }
 
 }
