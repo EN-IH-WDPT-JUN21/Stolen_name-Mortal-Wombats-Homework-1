@@ -1,5 +1,6 @@
 package com.ironhack.homeworkRPGSIM;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Wizard extends Character implements Attacker{
@@ -24,8 +25,7 @@ public class Wizard extends Character implements Attacker{
         super(name, hp);
         setMana(mana);
         setIntelligence(intelligence);
-        System.out.println("Wise old Wizard " + name + " joins the party, they have a hp of " + getHp() +
-                " a mana pool of " + getMana() + " and an intelligence of " + getIntelligence());
+
     }
 
     public Wizard() {
@@ -44,12 +44,11 @@ public class Wizard extends Character implements Attacker{
 
     public void setHp(int hp){
         if(hp < MINHP){
-            System.out.println("hp for Wizards must be "+ MAXHP +" or more, setting hp for this character to "
-                    + MAXHP);
+            System.out.println("Wizards' HP must be "+ MINHP +" or more, setting HP for this character to " + MINHP + ".");
             this.hp = MINHP;
         } else if(hp > MAXHP){
-            System.out.println("hp for Wizards cannot be more than " + MAXHP +", setting hp for this character to " +
-                    MAXHP);
+            System.out.println("Wizards' HP cannot be more than " + MAXHP +", setting HP for this character to " +
+                    MAXHP + ".");
             this.hp = MAXHP;
         } else {
             this.hp = hp;
@@ -60,12 +59,12 @@ public class Wizard extends Character implements Attacker{
 
     public void setMana(int mana) {
         if(mana < MINMANA){
-            System.out.println("mana must be " + MINMANA +" or more, setting mana for this character to " +
-                    MINMANA);
+            System.out.println("Mana must be " + MINMANA +" or more, setting mana for this character to " +
+                    MINMANA+".");
             this.mana = MINMANA;
-        } else if(mana >MAXMANA){
-            System.out.println("mana cannot be more than " + MAXMANA +", setting mana for this character to "
-                    + MAXMANA);
+        } else if(mana > MAXMANA){
+            System.out.println("Mana cannot be more than " + MAXMANA +", setting mana for this character to "
+                    + MAXMANA+".");
             this.mana = MAXMANA;
         } else {
             this.mana = mana;
@@ -75,12 +74,12 @@ public class Wizard extends Character implements Attacker{
     public void setIntelligence(int intelligence) {
 
         if(intelligence < MININTELLIGENCE){
-            System.out.println("intelligence must be " + MININTELLIGENCE +" or more, setting intelligence for this " +
-                    "character to " + MININTELLIGENCE);
+            System.out.println("Intelligence must be " + MININTELLIGENCE +" or more, setting intelligence for this " +
+                    "character to " + MININTELLIGENCE+".");
             this.intelligence = MININTELLIGENCE;
         } else if(intelligence >MAXINTELLIGENCE){
-            System.out.println("intelligence cannot be more than " + MAXINTELLIGENCE +", setting intelligence for this " +
-                    "character to " + MAXINTELLIGENCE);
+            System.out.println("Intelligence cannot be more than " + MAXINTELLIGENCE +", setting intelligence for this " +
+                    "character to " + MAXINTELLIGENCE+".");
             this.intelligence = MAXINTELLIGENCE;
         } else {
             this.intelligence = intelligence;
@@ -95,11 +94,11 @@ public class Wizard extends Character implements Attacker{
         if(mana>=5){
             damage = intelligence;
             mana = mana - 5;
-            System.out.println(name + " casts Fireball which inflicts " + damage + " damage, Zap!");
+            System.out.println(name + " casts Fireball which inflicts " + damage + " damage. Zap!");
         } else {
             damage = 1;
             mana ++;
-            System.out.println(name + " is so tired they can only manage a Staff hit, which inflicts " + damage + " damage, pathetic");
+            System.out.println(name + " is so tired they can only manage a Staff hit, which inflicts " + damage + " damage. Pathetic.");
         }
 
         return damage;
@@ -110,9 +109,9 @@ public class Wizard extends Character implements Attacker{
     @Override
     public String toString() {
         return "Wizard: " + name +
-                "\n HP: " + hp +
-                "\n Mana: " + mana +
-                "\n Intelligence: " + intelligence + "\n";
+                "| HP: " + hp +
+                "| Mana: " + mana +
+                "| Intelligence: " + intelligence;
     }
 
     // **** METHOD TO MANUALLY CREATE CHARACTER ****
@@ -123,47 +122,45 @@ public class Wizard extends Character implements Attacker{
         boolean validMana = false;
         boolean validIntelligence = false;
 
-        System.out.println("Give your Wizard a name:> ");
+        System.out.println("\nGive your Wizard a name:");
         while (!validName) {
             try {
                 setName(scan.nextLine());
                 validName = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a valid name: ");
                 scan.next();
             }
         }
-        System.out.println("Set "+ getName() + "'s starting health:> ");
+        System.out.println("\nSet "+ getName() + "'s starting health (between "+ MINHP + " and " + MAXHP + "):");
         while (!validHp) {
             try {
                 setHp(scan.nextInt());
                 validHp = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
         }
-        System.out.println("Set "+ getName() + "'s starting mana:> ");
+        System.out.println("\nSet "+ getName() + "'s starting mana (between "+ MINMANA + " and " + MAXMANA + "):");
         while (!validMana) {
             try {
                 setMana(scan.nextInt());
                 validMana = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
         }
-        System.out.println("Set " + getName() + "'s intelligence:> ");
+        System.out.println("\nSet " + getName() + "'s intelligence (between "+ MININTELLIGENCE + " and " + MAXINTELLIGENCE + "):");
         while (!validIntelligence) {
             try {
                 setIntelligence(scan.nextInt());
                 validIntelligence = true;
-            } catch (Exception er) {
+            } catch (InputMismatchException er) {
                 System.out.println("Please input a number: ");
                 scan.next();
             }
         }
-        System.out.println("Wise old Wizard " + getName() + " joins the party, they have a hp of " + getHp() +
-                " a mana pool of " + getMana() + " and an intelligence of " + getIntelligence());
     }
 }

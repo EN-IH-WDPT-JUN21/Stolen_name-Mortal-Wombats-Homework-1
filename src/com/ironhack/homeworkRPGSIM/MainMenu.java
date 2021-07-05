@@ -1,7 +1,9 @@
 package com.ironhack.homeworkRPGSIM;
 
 
+import javax.swing.text.AttributeSet;
 import java.io.FileWriter;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -65,17 +67,12 @@ class MainMenu {
 
             //Sends the user to the method chosen
             switch (ch) {
-                case 1 -> {
-                    onePlayerGameMode();
-                    break;
-                }
+                case 1 -> onePlayerGameMode();
                 case 2 -> {
                     twoPlayerGameMode();
-                    break;
                 }
                 case 3 -> {
                     generateRandomGame();
-                    break;
                 }
                 default -> System.out.println("Please, choose a valid game mode.\n");
             }
@@ -104,25 +101,26 @@ class MainMenu {
                 case 1:
                     // **** USER CHOOSES NAMES AND STATS FOR EACH CHARACTER ****
                     createOwnParty();
+                    wantsToExportParty(party1, 1);
+                    System.out.println(party1);
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
-                    readToCSV(party1);
                     break;
                 case 2:
                     // **** CREATES A RANDOM PARTY OF A RANDOM SIZE FOR PLAYER 1 ****
                     generateRandomParty(party1);
-                    readToCSV(party1);
+                    wantsToExportParty(party1, 1);
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
-                    readToCSV(party2);
+                    wantsToExportParty(party2, 2);
                     break;
                 case 3:
                     // **** USER IMPORTS PARTY FROM CSV FILE ****
-                    importParty(party1);
+                    importParty(party1, 1);
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
                     // **** THIS WILL CREATE A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
-                    readToCSV(party1);
+                    wantsToExportParty(party1, 1);
                     break;
                 case 0:
                     mainMenu();
@@ -132,7 +130,7 @@ class MainMenu {
             }
         } while (ch != 1 && ch != 2 && ch !=3);
 
-        System.out.println("************** THE BATTLE IS ABOUT BEGIN! ************** ");
+        System.out.println("\n************** THE BATTLE IS ABOUT BEGIN! ************** ");
         System.out.println("Press Enter to Start the Battle.");
         scanner.nextLine();
 
@@ -148,12 +146,12 @@ class MainMenu {
         //Prevents that the message is shown befrore Player2's Menu
         if (playerNumber == 1) {
             System.out.println ("\n*********************************************************");
-            System.out.println ("\nYou've chosen 2 Player Mode.\n");
+            System.out.println ("\nYou've chosen 2 Player Mode.");
         }
 
         //Shows the Menu for Player 1 and repeats for Player 2
         while(playerNumber < 3) {
-            System.out.println("+++ MENU PLAYER " + playerNumber + " +++\n");
+            System.out.println("\n+++ MENU PLAYER " + playerNumber + " +++\n");
             System.out.println("Create your party:");
 
             do {
@@ -167,23 +165,39 @@ class MainMenu {
                 switch (ch) {
                     case 1:
                         // **** USER CHOOSES NAMES AND STATS FOR EACH CHARACTER ****
-                        createOwnParty();
-                        playerNumber++;
+                        if(playerNumber == 1) {
+                            createOwnParty();
+                            wantsToExportParty(party1, 1);
+                            playerNumber++;
+                        }else {
+                            createOwnParty();
+                            wantsToExportParty(party2, 2);
+                            playerNumber++;
+                        }
                         break;
                     case 2:
                         if(playerNumber == 1) {
                             // **** CREATES A RANDOM PARTY OF A RANDOM SIZE FOR PLAYER 1 ****
                             generateRandomParty(party1);
+                            wantsToExportParty(party1, 1);
                         }else {
                             // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                             generateRandomParty(party1, party2);
+                            wantsToExportParty(party2, 2);
                         }
                         playerNumber++;
                         break;
                     case 3:
                         // **** USER IMPORTS PARTY FROM CSV FILE ****
-                        importParty(party1);
-                        playerNumber++;
+                        if(playerNumber == 1) {
+                            importParty(party1, playerNumber);
+                            wantsToExportParty(party1, 1);
+                            playerNumber++;
+                        }else {
+                            importParty(party2, playerNumber);
+                            wantsToExportParty(party2, 2);
+                            playerNumber++;
+                        }
                         break;
                     case 0:
                         mainMenu();
@@ -194,7 +208,7 @@ class MainMenu {
             } while (ch != 1 && ch != 2 && ch !=3);
         }
 
-        System.out.println("******** THE BATTLE IS ABOUT BEGIN! ******** ");
+        System.out.println("\n******** THE BATTLE IS ABOUT BEGIN! ******** ");
         System.out.println("Press Enter to Start the Battle.");
         scanner.nextLine();
 
@@ -218,29 +232,41 @@ class MainMenu {
 
         ArrayList<Character> party = new ArrayList<>();
 
-        System.out.println ("*********************************************************");
-        System.out.println ("\nYou've chosen to create all the characters.\n");
+        System.out.println ("\n*********************************************************");
+        System.out.println ("\nYou've chosen to create all the characters.");
 
 
         do {
-            System.out.println("""
-                                       What type of Character would you like to create?
-                                       1. Warrior
-                                       2. Wizard""".indent(1));
+            System.out.println("\nWhat type of Character would you like to create?");
+            System.out.println("1 - Warrior");
+            System.out.println("2 - Wizard");
 
-            getsChoice(); //Gets the player choice and stores it in ch property
+            do {
+                getsChoice(); //Gets the player choice and stores it in ch property
 
-            if(ch == 1) {
-                Warrior warrior = new Warrior(); // CREATES NEW WARRIOR OBJECT WITH ONLY ID VALUE
-                warrior.customiseWarrior(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
-                party.add(warrior); // ADDS NEW WARRIOR TO PARTY
-            }
-            else if (ch == 2){
-                Wizard wizard = new Wizard(); // CREATES NEW WIZARD OBJECT WITH ONLY ID VALUE
-                wizard.customiseWizard(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
-                party.add(wizard); // ADDS NEW WARRIOR TO PARTY
-            }
+                switch (ch) {
+                    case 1:
+                        Warrior warrior = new Warrior(); // CREATES NEW WARRIOR OBJECT WITH ONLY ID VALUE
+                        warrior.customiseWarrior(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
+                        party.add(warrior); // ADDS NEW WARRIOR TO PARTY
+                        System.out.println("\nBrave new Warrior " + warrior.getName() + " joins the party! They have a HP of " + warrior.getHp() +
+                                ", a stamina of " + warrior.getStamina() + " and a strength of " + warrior.getStrength() + ".");
+                        break;
+                    case 2:
+                        Wizard wizard = new Wizard(); // CREATES NEW WIZARD OBJECT WITH ONLY ID VALUE
+                        wizard.customiseWizard(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
+                        party.add(wizard); // ADDS NEW WARRIOR TO PARTY
+                        System.out.println("\nWise old Wizard " + wizard.getName() + " joins the party! They have a HP of " + wizard.getHp() +
+                                ", a mana pool of " + wizard.getMana() + " and an intelligence of " + wizard.getIntelligence() + ".");
+                        break;
+                    default:
+                        System.out.println("Please, choose a valid number.\n");
+                        break;
+                }
+            }while(ch != 1 && ch != 2);
 
+
+            System.out.println("\n************\n");
             System.out.println("Do you want to create a new character?");
             System.out.println("1 - Yes");
             System.out.println("2 - No");
@@ -260,6 +286,8 @@ class MainMenu {
 
         } while (ch != 2);
 
+        System.out.println("Your party was created with success!");
+
 
         // **** WILL ASSIGN PARTY TO EITHER PLAYER 1 (PARTY 1) OR PLAYER 2
         if(party1.isEmpty()) {
@@ -268,14 +296,13 @@ class MainMenu {
         else{
             party2 = party;
         }
-        readToCSV(party1);
 
 
 
     }
 
     // **** RANDOMLY GENERATES PARTY SAME SIZE AS PARTY 1
-    private static void generateRandomParty(ArrayList party1, ArrayList party2) {
+    private static void generateRandomParty(ArrayList<Character> party1, ArrayList<Character> party2) {
         for (int i = 0; i < party1.size(); i++) {
             int randomNum = new Random().nextInt(2);
             if (randomNum == 0) {
@@ -287,18 +314,16 @@ class MainMenu {
                         new Random().nextInt(41), 1 + new Random().nextInt(10));
                 party2.add(warrior1);
             }
-
         }
 
-        System.out.println("Party created with these brave adventurers: ");
-        for(int i = 0; i < party2.size(); i++){
-            System.out.println(party2.get(i).toString());
+        System.out.println("\nPlayer 2's Party created with these brave adventurers: ");
+        for (Character character : party2) {
+            System.out.println("- " + character.toString());
         }
-
     }
 
     // **** RANDOMLY GENERATES NEW PARTY WITH A RANDOM PARTY SIZE
-    private static void generateRandomParty(ArrayList party1) {
+    private static void generateRandomParty(ArrayList<Character> party1) {
         int randomPartySize = 1 + new Random().nextInt(5); // MAX PARTY SIZE SET TO 5
         for (int i = 0; i < randomPartySize; i++) {
             int randomNum = new Random().nextInt(2);
@@ -311,11 +336,10 @@ class MainMenu {
                         new Random().nextInt(41), 1 + new Random().nextInt(10));
                 party1.add(warrior1);
             }
-
         }
-        System.out.println("Party created with these brave adventurers: \n");
+        System.out.println("\nPlayer 1's Party created with these brave adventurers:");
         for (Object o : party1) {
-            System.out.println(o.toString());
+            System.out.println("- " + o.toString());
         }
 
     }
@@ -333,6 +357,31 @@ class MainMenu {
                 scanner.next();
             }
         }while (ch == -1 );
+
+    }
+
+    //**** ASKS THE USER IF THEY WANT TO EXPORT THEIR PARTY ****
+    private static void wantsToExportParty(ArrayList<Character> party, int n) throws IOException {
+
+        System.out.println("\nDo you want to export the party into a csv file so you can use it again in the future?");
+        System.out.println("1 - Yes");
+        System.out.println("2 - No");
+
+        do {
+            getsChoice(); //Gets the player choice and stores it in ch property
+
+            switch (ch) {
+                case 1:
+                    readToCSV(party, n);
+                    break;
+                case 2:
+                    break;
+                default:
+                    System.out.println("Please, choose a valid option.\n");
+                    break;
+            }
+        }while(ch != 1 && ch != 2);
+
 
     }
 
@@ -365,32 +414,31 @@ class MainMenu {
 
         randomName = names.get(randomNum);
         if(party1.toString().contains(randomName) || party2.toString().contains(randomName)){
-            return randomName.concat(" Jr");
-        }else {
-            return randomName;
+            do {
+                randomName = randomName.concat(" Jr");
+            }while(party1.toString().contains(randomName) || party2.toString().contains(randomName));
         }
+        return randomName;
     }
 
     //**** IMPORT PARTY FROM CSV FILE ***
-    private static void importParty(ArrayList party) {
-        List<Character> impCharacters = readFromCSV("ExportedParty.csv");
+    private static void importParty(ArrayList<Character> party, int n) {
+        List<Character> impCharacters = readFromCSV("ExportedParty"+n+".csv", n);
 
         for (Character c : impCharacters) {
             party.add(c);
         }
-        System.out.println(party.size());
     }
 
     //**** READ CSV FILE ****
-    private static List<Character> readFromCSV(String s) {
+    private static List<Character> readFromCSV(String s, int n) {
         List<Character> impCharacters = new ArrayList<>();
-        Path path = Paths.get("ExportedParty.csv");
+        Path path = Paths.get("ExportedParty"+n+".csv");
 
         try(BufferedReader read = Files.newBufferedReader(path, StandardCharsets.US_ASCII)){
             String line = read.readLine();
                 while (line != null) {
-                    //String[] impStats = line.trim().split(",");
-                    String[] impStats = line.trim().split(",  ");
+                    String[] impStats = line.trim().split(",");
                     Character ch1 = createCharacter(impStats);
                     impCharacters.add(ch1);
                     line = read.readLine();
@@ -406,11 +454,11 @@ class MainMenu {
         int type = Integer.parseInt(metadata[0]);
         //int id = Integer.parseInt(metadata[1]);
         String name = metadata[1];
-        int hp = Integer.parseInt(metadata[2]);
-        int mana = Integer.parseInt(metadata[3]);
-        int intelligence = Integer.parseInt(metadata[4]);
-        int stamina = Integer.parseInt(metadata[3]);
-        int strength = Integer.parseInt(metadata[4]);
+        int hp = Integer.parseInt(metadata[2].trim());
+        int mana = Integer.parseInt(metadata[3].trim());
+        int intelligence = Integer.parseInt(metadata[4].trim());
+        int stamina = Integer.parseInt(metadata[3].trim());
+        int strength = Integer.parseInt(metadata[4].trim());
 
         //to ensure the same limits apply regardless of the data in the import file
         if (type == 2) {
@@ -471,28 +519,31 @@ class MainMenu {
     }
 
     //**** EXPORT PARTY TO CSV FILE ****
-    public static void readToCSV(ArrayList party) throws IOException {
-        FileWriter writer = new FileWriter("ExportedParty.csv", true);
+    public static void readToCSV(ArrayList<Character> party, int n) throws IOException {
+        FileWriter writer = new FileWriter("ExportedParty"+n+".csv", false);
         for(int r = 0; r < party.size(); r++){
-            String str = String.valueOf(party.get(r));
-            //str = str.replace(" ","");
+            String str = (party.get(r).toString());
             if(str.contains("Warrior")){
-                str = str.replace("Warrior:","");
-                str = str.replace("HP:","");
-                str = str.replace("Stamina:","");
-                str = str.replace("Strength:","");
-                str = "1, "+str.replace("\n", ",");
+                str = str.replace("Warrior: ","");
+                str = str.replace("| HP:",",");
+                str = str.replace("| Stamina:",",");
+                str = str.replace("| Strength:",",");
+                System.out.println(str);
+                str = "1,"+str;
             } else if (str.contains("Wizard")){
-                str = str.replace("Wizard:","");
-                str = str.replace("HP:","");
-                str = str.replace("Mana:","");
-                str = str.replace("Intelligence:","");
-                str = "2, " + str.replace("\n", ",");
+                str = str.replace("Wizard: ","");
+                str = str.replace("| HP: ",",");
+                str = str.replace("| Mana: ",",");
+                str = str.replace("| Intelligence: ",",");
+                str = "2," + str;
             }
-            writer.append(str.substring(0, str.length() -1));
+            writer.append(str);
             writer.append("\n");
         }
         writer.close();
+
+        System.out.println("\nParty exported with success.");
+        System.out.println("\n-----------------");
     }
 
 }
