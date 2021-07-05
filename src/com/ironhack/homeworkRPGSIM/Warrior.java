@@ -46,7 +46,7 @@ public class Warrior extends Character implements Attacker {
                     + MINHP + ".");
             this.hp = MINHP;
         } else if (hp > MAXHP) {
-            System.out.println("HP for Warriors cannot be more than " + MAXHP + ", setting HP for this character to" +
+            System.out.println("HP for Warriors cannot be more than " + MAXHP + ", setting HP for this character to " +
                     MAXHP + ".");
             this.hp = MAXHP;
         } else {
