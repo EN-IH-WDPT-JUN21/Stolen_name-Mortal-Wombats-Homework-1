@@ -100,7 +100,7 @@ class MainMenu {
             switch (ch) {
                 case 1:
                     // **** USER CHOOSES NAMES AND STATS FOR EACH CHARACTER ****
-                    createOwnParty();
+                    createOwnParty(party1);
                     wantsToExportParty(party1, 1);
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
@@ -164,9 +164,15 @@ class MainMenu {
                 switch (ch) {
                     case 1:
                         // **** USER CHOOSES NAMES AND STATS FOR EACH CHARACTER ****
-                        createOwnParty();
-                        wantsToExportParty(party1, 1);
-                        playerNumber++;
+                        if(playerNumber == 1) {
+                            createOwnParty(party1);
+                            wantsToExportParty(party1, 1);
+                            playerNumber++;
+                        }else {
+                            createOwnParty(party2);
+                            wantsToExportParty(party2, 2);
+                            playerNumber++;
+                        }
                         break;
                     case 2:
                         if(playerNumber == 1) {
@@ -182,8 +188,15 @@ class MainMenu {
                         break;
                     case 3:
                         // **** USER IMPORTS PARTY FROM CSV FILE ****
-                        importParty(party1, playerNumber);
-                        playerNumber++;
+                        if(playerNumber == 1) {
+                            importParty(party1, playerNumber);
+                            wantsToExportParty(party1, 1);
+                            playerNumber++;
+                        }else {
+                            importParty(party2, playerNumber);
+                            wantsToExportParty(party2, 2);
+                            playerNumber++;
+                        }
                         break;
                     case 0:
                         mainMenu();
@@ -214,9 +227,7 @@ class MainMenu {
 
     }
 
-    private static void createOwnParty() throws IOException {
-
-        ArrayList<Character> party = new ArrayList<>();
+    private static void createOwnParty(ArrayList<Character> party) throws IOException {
 
         System.out.println ("\n*********************************************************");
         System.out.println ("\nYou've chosen to create all the characters.");
