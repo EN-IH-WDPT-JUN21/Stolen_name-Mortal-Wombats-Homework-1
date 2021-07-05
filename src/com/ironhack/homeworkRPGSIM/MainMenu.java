@@ -520,7 +520,7 @@ class MainMenu {
 
     //**** EXPORT PARTY TO CSV FILE ****
     public static void readToCSV(ArrayList<Character> party, int n) throws IOException {
-        FileWriter writer = new FileWriter("ExportedParty"+n+".csv", true);
+        FileWriter writer = new FileWriter("ExportedParty"+n+".csv", false);
         for(int r = 0; r < party.size(); r++){
             String str = (party.get(r).toString());
             if(str.contains("Warrior")){
