@@ -427,7 +427,7 @@ class MainMenu {
         try(BufferedReader read = Files.newBufferedReader(path, StandardCharsets.US_ASCII)){
             String line = read.readLine();
                 while (line != null) {
-                    String[] impStats = line.trim().split(",  ");
+                    String[] impStats = line.trim().split(",");
                     Character ch1 = createCharacter(impStats);
                     impCharacters.add(ch1);
                     line = read.readLine();
@@ -443,11 +443,11 @@ class MainMenu {
         int type = Integer.parseInt(metadata[0]);
         //int id = Integer.parseInt(metadata[1]);
         String name = metadata[1];
-        int hp = Integer.parseInt(metadata[2]);
-        int mana = Integer.parseInt(metadata[3]);
-        int intelligence = Integer.parseInt(metadata[4]);
-        int stamina = Integer.parseInt(metadata[3]);
-        int strength = Integer.parseInt(metadata[4]);
+        int hp = Integer.parseInt(metadata[2].trim());
+        int mana = Integer.parseInt(metadata[3].trim());
+        int intelligence = Integer.parseInt(metadata[4].trim());
+        int stamina = Integer.parseInt(metadata[3].trim());
+        int strength = Integer.parseInt(metadata[4].trim());
 
         //to ensure the same limits apply regardless of the data in the import file
         if (type == 2) {
@@ -511,21 +511,22 @@ class MainMenu {
     public static void readToCSV(ArrayList party, int n) throws IOException {
         FileWriter writer = new FileWriter("ExportedParty"+n+".csv", true);
         for(int r = 0; r < party.size(); r++){
-            String str = String.valueOf(party.get(r));
+            String str = (party.get(r).toString());
             if(str.contains("Warrior")){
-                str = str.replace("Warrior:","");
-                str = str.replace("HP:","");
-                str = str.replace("Stamina:","");
-                str = str.replace("Strength:","");
-                str = "1, "+str;
+                str = str.replace("Warrior: ","");
+                str = str.replace("| HP:",",");
+                str = str.replace("| Stamina:",",");
+                str = str.replace("| Strength:",",");
+                System.out.println(str);
+                str = "1,"+str;
             } else if (str.contains("Wizard")){
-                str = str.replace("Wizard:","");
-                str = str.replace("HP:","");
-                str = str.replace("Mana:","");
-                str = str.replace("Intelligence:","");
-                str = "2, " + str;
+                str = str.replace("Wizard: ","");
+                str = str.replace("| HP: ",",");
+                str = str.replace("| Mana: ",",");
+                str = str.replace("| Intelligence: ",",");
+                str = "2," + str;
             }
-            writer.append(str.substring(0, str.length() -1));
+            writer.append(str);
             writer.append("\n");
         }
         writer.close();

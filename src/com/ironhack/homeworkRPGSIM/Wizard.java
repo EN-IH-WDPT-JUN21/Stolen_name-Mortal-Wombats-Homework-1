@@ -109,7 +109,7 @@ public class Wizard extends Character implements Attacker{
     @Override
     public String toString() {
         return "Wizard: " + name +
-                " | HP: " + hp +
+                "| HP: " + hp +
                 "| Mana: " + mana +
                 "| Intelligence: " + intelligence;
     }
