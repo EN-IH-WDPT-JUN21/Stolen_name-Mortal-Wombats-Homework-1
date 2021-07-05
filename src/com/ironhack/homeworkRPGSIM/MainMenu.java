@@ -305,9 +305,7 @@ class MainMenu {
     private static void generateRandomParty(ArrayList<Character> party1, ArrayList<Character> party2) {
         for (int i = 0; i < party1.size(); i++) {
             int randomNum = new Random().nextInt(2);
-            System.out.println(randomNum);
             if (randomNum == 0) {
-                System.out.println("Test1");
                 Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 +
                         new Random().nextInt(41), 1 + new Random().nextInt(50));
                 party2.add(wizard1);
