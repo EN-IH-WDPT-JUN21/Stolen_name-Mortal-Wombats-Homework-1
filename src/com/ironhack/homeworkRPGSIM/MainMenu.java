@@ -1,7 +1,9 @@
 package com.ironhack.homeworkRPGSIM;
 
 
+import javax.swing.text.AttributeSet;
 import java.io.FileWriter;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -65,9 +67,7 @@ class MainMenu {
 
             //Sends the user to the method chosen
             switch (ch) {
-                case 1 -> {
-                    onePlayerGameMode();
-                }
+                case 1 -> onePlayerGameMode();
                 case 2 -> {
                     twoPlayerGameMode();
                 }
@@ -100,8 +100,9 @@ class MainMenu {
             switch (ch) {
                 case 1:
                     // **** USER CHOOSES NAMES AND STATS FOR EACH CHARACTER ****
-                    createOwnParty(party1);
+                    createOwnParty();
                     wantsToExportParty(party1, 1);
+                    System.out.println(party1);
                     // **** CREATES A RANDOM PARTY THE SAME SIZE AS PLAYER 1'S PARTY ****
                     generateRandomParty(party1, party2);
                     break;
@@ -165,11 +166,11 @@ class MainMenu {
                     case 1:
                         // **** USER CHOOSES NAMES AND STATS FOR EACH CHARACTER ****
                         if(playerNumber == 1) {
-                            createOwnParty(party1);
+                            createOwnParty();
                             wantsToExportParty(party1, 1);
                             playerNumber++;
                         }else {
-                            createOwnParty(party2);
+                            createOwnParty();
                             wantsToExportParty(party2, 2);
                             playerNumber++;
                         }
@@ -227,7 +228,9 @@ class MainMenu {
 
     }
 
-    private static void createOwnParty(ArrayList<Character> party) throws IOException {
+    private static void createOwnParty() throws IOException {
+
+        ArrayList<Character> party = new ArrayList<>();
 
         System.out.println ("\n*********************************************************");
         System.out.println ("\nYou've chosen to create all the characters.");
@@ -299,10 +302,12 @@ class MainMenu {
     }
 
     // **** RANDOMLY GENERATES PARTY SAME SIZE AS PARTY 1
-    private static void generateRandomParty(ArrayList party1, ArrayList party2) {
+    private static void generateRandomParty(ArrayList<Character> party1, ArrayList<Character> party2) {
         for (int i = 0; i < party1.size(); i++) {
             int randomNum = new Random().nextInt(2);
+            System.out.println(randomNum);
             if (randomNum == 0) {
+                System.out.println("Test1");
                 Wizard wizard1 = new Wizard(randomName(), 50 + new Random().nextInt(50), 10 +
                         new Random().nextInt(41), 1 + new Random().nextInt(50));
                 party2.add(wizard1);
@@ -311,18 +316,16 @@ class MainMenu {
                         new Random().nextInt(41), 1 + new Random().nextInt(10));
                 party2.add(warrior1);
             }
-
         }
 
         System.out.println("\nPlayer 2's Party created with these brave adventurers: ");
-        for(int i = 0; i < party2.size(); i++){
-            System.out.println("- " + party2.get(i).toString());
+        for (Character character : party2) {
+            System.out.println("- " + character.toString());
         }
-
     }
 
     // **** RANDOMLY GENERATES NEW PARTY WITH A RANDOM PARTY SIZE
-    private static void generateRandomParty(ArrayList party1) {
+    private static void generateRandomParty(ArrayList<Character> party1) {
         int randomPartySize = 1 + new Random().nextInt(5); // MAX PARTY SIZE SET TO 5
         for (int i = 0; i < randomPartySize; i++) {
             int randomNum = new Random().nextInt(2);
@@ -335,7 +338,6 @@ class MainMenu {
                         new Random().nextInt(41), 1 + new Random().nextInt(10));
                 party1.add(warrior1);
             }
-
         }
         System.out.println("\nPlayer 1's Party created with these brave adventurers:");
         for (Object o : party1) {
@@ -361,7 +363,7 @@ class MainMenu {
     }
 
     //**** ASKS THE USER IF THEY WANT TO EXPORT THEIR PARTY ****
-    private static void wantsToExportParty(ArrayList party, int n) throws IOException {
+    private static void wantsToExportParty(ArrayList<Character> party, int n) throws IOException {
 
         System.out.println("\nDo you want to export the party into a csv file so you can use it again in the future?");
         System.out.println("1 - Yes");
@@ -422,7 +424,7 @@ class MainMenu {
     }
 
     //**** IMPORT PARTY FROM CSV FILE ***
-    private static void importParty(ArrayList party, int n) {
+    private static void importParty(ArrayList<Character> party, int n) {
         List<Character> impCharacters = readFromCSV("ExportedParty"+n+".csv", n);
 
         for (Character c : impCharacters) {
@@ -519,7 +521,7 @@ class MainMenu {
     }
 
     //**** EXPORT PARTY TO CSV FILE ****
-    public static void readToCSV(ArrayList party, int n) throws IOException {
+    public static void readToCSV(ArrayList<Character> party, int n) throws IOException {
         FileWriter writer = new FileWriter("ExportedParty"+n+".csv", true);
         for(int r = 0; r < party.size(); r++){
             String str = (party.get(r).toString());
