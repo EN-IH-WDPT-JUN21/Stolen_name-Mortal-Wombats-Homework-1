@@ -24,9 +24,6 @@ public class Warrior extends Character implements Attacker {
         super(name, hp);
         setStamina(stamina);
         setStrength(strength);
-
-        System.out.println("Brave new Warrior " + name + " joins the party, they have a hp of " + getHp() +
-                " a stamina of " + getStamina() + " and a strength of " + getStrength());
     }
 
     public Warrior() {
@@ -45,12 +42,12 @@ public class Warrior extends Character implements Attacker {
 
     public void setHp(int hp) {
         if (hp < MINHP) {
-            System.out.println("hp for Warriors must be " + MINHP + " or more, setting hp for this character to "
-                    + MINHP);
+            System.out.println("HP for Warriors must be " + MINHP + " or more, setting hp for this character to "
+                    + MINHP + ".");
             this.hp = MINHP;
         } else if (hp > MAXHP) {
-            System.out.println("hp for Warriors cannot be more than " + MAXHP + ", setting hp for this character to" +
-                    MAXHP);
+            System.out.println("HP for Warriors cannot be more than " + MAXHP + ", setting HP for this character to" +
+                    MAXHP + ".");
             this.hp = MAXHP;
         } else {
             this.hp = hp;
@@ -61,11 +58,11 @@ public class Warrior extends Character implements Attacker {
     public void setStamina(int stamina) {
         if (stamina < MINSTAMINA) {
             System.out.println("Stamina must be " + MINSTAMINA + " or more, setting Stamina for this character to " +
-                    MINSTAMINA);
+                    MINSTAMINA + ".");
             this.stamina = MINSTAMINA;
         } else if (stamina > MAXSTAMINA) {
             System.out.println("Stamina cannot be more than " + MAXSTAMINA + ", setting Stamina for this character to " +
-                    +MAXSTAMINA);
+                    +MAXSTAMINA + ".");
             this.stamina = MAXSTAMINA;
         } else {
             this.stamina = stamina;
@@ -76,11 +73,11 @@ public class Warrior extends Character implements Attacker {
 
         if (strength < MINSTRENGTH) {
             System.out.println("Strength must be " + MINSTRENGTH + " or more, setting Strength for this character to "
-                    + MINSTRENGTH);
+                    + MINSTRENGTH + ".");
             this.strength = MINSTRENGTH;
         } else if (strength > MAXSTRENGTH) {
             System.out.println("Strength cannot be more than " + MAXSTRENGTH + ", setting Strength for this character" +
-                    " to " + MAXSTRENGTH);
+                    " to " + MAXSTRENGTH + ".");
             this.strength = MAXSTRENGTH;
         } else {
             this.strength = strength;
@@ -90,16 +87,16 @@ public class Warrior extends Character implements Attacker {
     // **** ATTACK FUNCTION ****
 
     public int attack() {
-        int damage = 0;
+        int damage;
 
         if (stamina >= 5) {
             damage = strength;
             stamina = stamina - 5;
-            System.out.println(name + " does a Heavy Attack which inflicts " + damage + " damage, take that!");
+            System.out.println(name + " does a Heavy Attack which inflicts " + damage + " damage. Take that!");
         } else {
             damage = (strength / 2 >= 1) ? strength / 2 : 1;
             stamina++;
-            System.out.println(name + " is so tired they can only manage a Weak Attack, which inflicts " + damage + " damage, pathetic");
+            System.out.println(name + " is so tired they can only manage a Weak Attack, which inflicts " + damage + " damage. Pathetic.");
         }
 
 
@@ -111,9 +108,9 @@ public class Warrior extends Character implements Attacker {
     @Override
     public String toString() {
         return "Warrior: " + name +
-                "\n HP: " + hp +
-                "\n Stamina: " + stamina +
-                "\n Strength: " + strength + "\n";
+                "| HP: " + hp +
+                "| Stamina: " + stamina +
+                "| Strength: " + strength;
     }
 
 
@@ -125,7 +122,7 @@ public class Warrior extends Character implements Attacker {
         boolean validStrength = false;
         boolean validStamina = false;
 
-        System.out.println("Give your Warrior a name:> ");
+        System.out.println("\nGive your Warrior a name:");
 
         while (!validName) {
             try {
@@ -136,17 +133,17 @@ public class Warrior extends Character implements Attacker {
                 scan.next();
             }
         }
-        System.out.println("Set " + getName() + "'s starting health:> ");
+        System.out.println("\nSet " + getName() + "'s starting health (between " + MINHP + " and " + MAXHP + "):");
         while (!validHp) {
             try {
                 setHp(scan.nextInt());
                 validHp = true;
-            } catch (InputMismatchException er) {
-                System.out.println("Please input a number: ");
+            } catch (Exception er) {
+                System.out.println("Please input a number:");
                 scan.next();
             }
         }
-        System.out.println("Set "+ getName() + "'s starting stamina:> ");
+        System.out.println("\nSet "+ getName() + "'s starting stamina (between " + MINSTAMINA + " and " + MAXSTAMINA + "):");
         while (!validStamina) {
             try {
                 setStamina(scan.nextInt());
@@ -156,7 +153,7 @@ public class Warrior extends Character implements Attacker {
                 scan.next();
             }
         }
-        System.out.println("Set "+ getName() + "'s strength:> ");
+        System.out.println("\nSet "+ getName() + "'s strength (between " + MINSTRENGTH + " and " + MAXSTRENGTH + "):");
         while (!validStrength) {
             try {
                 setStrength(scan.nextInt());
@@ -166,7 +163,6 @@ public class Warrior extends Character implements Attacker {
                 scan.next();
             }
         }
-        System.out.println("Brave new Warrior " + getName() + " joins the party, they have a hp of " + getHp() +
-                " a stamina of " + getStamina() + " and a strength of " + getStrength());
     }
+
 }
