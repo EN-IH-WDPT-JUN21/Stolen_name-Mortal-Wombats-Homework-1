@@ -257,7 +257,7 @@ class MainMenu {
                                 ", a mana pool of " + wizard.getMana() + " and an intelligence of " + wizard.getIntelligence() + ".");
                         break;
                     default:
-                        System.out.println("Please, choose a valid option.\n");
+                        System.out.println("Please, choose a valid number.\n");
                         break;
                 }
             }while(ch != 1 && ch != 2);
@@ -388,7 +388,7 @@ class MainMenu {
     // **** RANDOM NAME GENERATOR ****
     private static String randomName(){
         String randomName;
-        int randomNum = new Random().nextInt(2);
+        int randomNum = new Random().nextInt(20);
 
         ArrayList<String> names = new ArrayList<>();
         names.add("Grim Weeper");
