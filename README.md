@@ -1,7 +1,7 @@
 <img alt="cool logo" src="https://github.com/EN-IH-WDPT-JUN21/Stolen_name-Mortal-Wombats-Homework-1/blob/master/logo_mortal_wombats-01.svg">
 
 
-<h2>Welcome to the Mortal Wombats Battle Game - Created by: &ltStolen_Name&gt  </h2> 
+<h2>Welcome to Mortal Wombats - Created by: &ltStolen_Name&gt  </h2> 
 
 <h3> How to play: </h4>
 
