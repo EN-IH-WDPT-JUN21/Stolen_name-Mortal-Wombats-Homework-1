@@ -380,7 +380,7 @@ class MainMenu {
     // **** RANDOM NAME GENERATOR ****
     private static String randomName(){
         String randomName;
-        int randomNum = new Random().nextInt(20);
+        int randomNum = new Random().nextInt(2);
 
         ArrayList<String> names = new ArrayList<>();
         names.add("Grim Weeper");
@@ -406,10 +406,11 @@ class MainMenu {
 
         randomName = names.get(randomNum);
         if(party1.toString().contains(randomName) || party2.toString().contains(randomName)){
-            return randomName.concat(" Jr");
-        }else {
-            return randomName;
+            do {
+                randomName = randomName.concat(" Jr");
+            }while(party1.toString().contains(randomName) || party2.toString().contains(randomName));
         }
+        return randomName;
     }
 
     //**** IMPORT PARTY FROM CSV FILE ***
