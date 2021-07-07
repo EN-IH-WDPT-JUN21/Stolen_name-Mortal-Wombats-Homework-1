@@ -5,7 +5,7 @@
 
 <h3> How to play: </h4>
 
-Simply load the Main.Java file and hit RUN! 
+Simply load the Main.Java file, hit RUN and ENJOY! 
 
 <b>Our intuitive menu system will prompt you what to do every step of the way. You will be able to do the following:</b> 
 
