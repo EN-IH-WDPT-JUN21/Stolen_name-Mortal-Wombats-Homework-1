@@ -7,23 +7,23 @@ import java.util.Scanner;
 
 public class Battle {
 
-    public static void battle(ArrayList party1, ArrayList party2, String[][] gr, List<String> party1Died, List<String> party2Died) {
-        Scanner scanner = new Scanner(System.in);
-        Character character1 = null;
-        Character character2 = null;
+    public static void battle(ArrayList<Character> party1, ArrayList<Character> party2, String[][] gr,
+                              List<String> party1Died, List<String> party2Died) {
+
+        Character character1;
+        Character character2;
 
         Graveyard graveyard = new Graveyard();
-
 
 
         do {
             if (MainMenu.playerNumber == 1 && party1.size() > 1) {
                 character1 = chooseCharacter(party1);
-                character2 = (Character) party2.get(new Random().nextInt(party2.size()));
+                character2 = party2.get(new Random().nextInt(party2.size()));
             } else if (MainMenu.playerNumber == 1 && party1.size() == 1) {
-                character1 = (Character) party1.get(0);
-                character2 = (Character) party2.get(new Random().nextInt(party2.size()));
-            }else if (MainMenu.playerNumber >= 2) {
+                character1 = party1.get(0);
+                character2 = party2.get(new Random().nextInt(party2.size()));
+            } else if (MainMenu.playerNumber >= 2) {
                 System.out.println("**** PLAYER 1 ****");
                 character1 = chooseCharacter(party1);
                 System.out.println("**** PLAYER 2 ****");
@@ -42,8 +42,8 @@ public class Battle {
                 character2 = (Character) party1.get(0);
                 character2 = (Character) party2.get(0); */
             } else {
-                character1 = (Character) party1.get(new Random().nextInt(party1.size()));
-                character2 = (Character) party2.get(new Random().nextInt(party2.size()));
+                character1 = party1.get(new Random().nextInt(party1.size()));
+                character2 = party2.get(new Random().nextInt(party2.size()));
             }
 
             int round = 1;
@@ -51,7 +51,7 @@ public class Battle {
 
             while (character1.hp > 0 && character2.hp > 0) {
                 System.out.println("\nCombat round: " + round +
-                                   "\n-----------------");
+                        "\n-----------------");
                 character1.hp = character1.hp - character2.attack();
                 character2.hp = character2.hp - character1.attack();
                 if (character1.hp <= 0) {
@@ -67,7 +67,7 @@ public class Battle {
                 }
                 if (character2.hp <= 0) {
                     character2.setAlive(false);
-                    character2.hp=0;
+                    character2.hp = 0;
                     System.out.println(character2.getName() + " has " + character2.hp + " hp!");
                     System.out.println(character2.getName() + " has died!");
                     graveyard.addGraveParty2(gr);
@@ -81,34 +81,34 @@ public class Battle {
         } while (party1.size() > 0 && party2.size() > 0);
     }
 
-    public static Character chooseCharacter(ArrayList party) {
+    public static Character chooseCharacter(ArrayList<Character> party) {
         Scanner scanner = new Scanner(System.in);
         Character character1 = null;
 
 
-            int characterNumber = 1;
-            System.out.println("\nChoose who you would like to send into battle? ");
-            for (int i = 0; i < party.size(); i++) {
-                System.out.println(characterNumber + " - " + party.get(i));
-                characterNumber++;
+        int characterNumber = 1;
+        System.out.println("\nChoose who you would like to send into battle? ");
+        for (Character character : party) {
+            System.out.println(characterNumber + " - " + character);
+            characterNumber++;
+        }
+        boolean validSelection = false;
+        while (!validSelection) {
+            try {
+                int selection = scanner.nextInt();
+                character1 = party.get(selection - 1);
+                validSelection = true;
+            } catch (Exception e) {
+                System.out.println("Please, choose a valid character number. \n");
+                scanner.next();
             }
-            boolean validSelection = false;
-            while (!validSelection) {
-                try {
-                    int selection = scanner.nextInt();
-                    character1 = (Character) party.get(selection - 1);
-                    validSelection = true;
-                } catch (Exception e) {
-                    System.out.println("Please, choose a valid character number. \n");
-                    scanner.next();
-                }
-            }
+        }
 
         return character1;
     }
 
     // GENERATING AND SHOWING A GRAVEYARD
-    public static void generateGraveyard(ArrayList party1, ArrayList party2, String[][] gr, String[] legend,
+    public static void generateGraveyard(ArrayList<Character> party1, ArrayList<Character> party2, String[][] gr, String[] legend,
                                          List<String> party1Died, List<String> party2Died) {
         Graveyard graveyard = new Graveyard();
 
@@ -142,18 +142,16 @@ public class Battle {
             if (graveyard.getParty1Graveyard() == 0) {
                 System.out.println("\nPARTY 1 EMERGED FROM THIS BATTLE VICTORIOUS AND WITHOUT ANY LOSSES!");
                 System.out.println("Died in Party PARTY 2: " + party2Died);
-            }
-            else if (graveyard.getParty1Graveyard() == 1) {
+            } else if (graveyard.getParty1Graveyard() == 1) {
                 System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty1Graveyard() + " COMPANION, PARTY 1 EMERGED VICTORIOUS FROM THIS BATTLE!");
                 System.out.println("Died in Party PARTY 1: " + party1Died);
                 System.out.println("Died in Party PARTY 2: " + party2Died);
-            }
-            else {
+            } else {
                 System.out.println("\nALTHOUGH THEY'VE BURIED " + graveyard.getParty1Graveyard() + " COMPANIONS, PARTY 1 EMERGED VICTORIOUS FROM THIS BATTLE!");
                 System.out.println("Died in Party PARTY 1: " + party1Died);
                 System.out.println("Died in Party PARTY 2: " + party2Died);
             }
-        } else if (party1.size() == 0 && party2.size() == 0) {
+        } else if (party1.size() == 0) {
             System.out.println("ALL BRAVE ADVENTURERS DIED IN THIS EVEN BATTLE. THEY WILL STAY AT THIS GRAVEYARD FOREVER!");
             System.out.println("Died in Party PARTY 1: " + party1Died);
             System.out.println("Died in Party PARTY 2: " + party2Died);

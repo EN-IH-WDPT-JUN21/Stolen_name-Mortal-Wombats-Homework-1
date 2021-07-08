@@ -5,10 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Graveyard {
 
-    // Different string icons that can be used when printing graveyard
-    private final String ghost = "[\uD83D\uDC7B]";
     private final String hole = "[\uD83D\uDD73]";
-    private final String skull = "[💀]";
 
     private final String emptyGrave = hole;
 
@@ -42,6 +39,7 @@ public class Graveyard {
                 randomColumn = ThreadLocalRandom.current().nextInt(randomColMin, randomColMax + 1);
             } while (!gr[randomColumn][randomRow].equals(emptyGrave));
         }
+        String skull = "[💀]";
         gr[randomColumn][randomRow] = skull;
         party1_graveyard++;
     }
@@ -58,6 +56,8 @@ public class Graveyard {
 
             } while (!gr[randomColumn][randomRow].equals(emptyGrave));
         }
+        // Different string icons that can be used when printing graveyard
+        String ghost = "[\uD83D\uDC7B]";
         gr[randomColumn][randomRow] = ghost;
         party2_graveyard++;
     }

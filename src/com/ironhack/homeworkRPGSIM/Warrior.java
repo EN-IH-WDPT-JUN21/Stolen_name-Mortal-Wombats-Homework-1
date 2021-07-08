@@ -94,7 +94,7 @@ public class Warrior extends Character implements Attacker {
             stamina = stamina - 5;
             System.out.println(name + " does a Heavy Attack which inflicts " + damage + " damage. Take that!");
         } else {
-            damage = (strength / 2 >= 1) ? strength / 2 : 1;
+            damage = Math.max(strength / 2, 1);
             stamina++;
             System.out.println(name + " is so tired they can only manage a Weak Attack, which inflicts " + damage + " damage. Pathetic.");
         }

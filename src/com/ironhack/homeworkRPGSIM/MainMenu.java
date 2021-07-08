@@ -1,9 +1,7 @@
 package com.ironhack.homeworkRPGSIM;
 
 
-import javax.swing.text.AttributeSet;
 import java.io.FileWriter;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,12 +66,8 @@ class MainMenu {
             //Sends the user to the method chosen
             switch (ch) {
                 case 1 -> onePlayerGameMode();
-                case 2 -> {
-                    twoPlayerGameMode();
-                }
-                case 3 -> {
-                    generateRandomGame();
-                }
+                case 2 -> twoPlayerGameMode();
+                case 3 -> generateRandomGame();
                 default -> System.out.println("Please, choose a valid game mode.\n");
             }
         } while (ch != 1 && ch != 2 && ch != 3);
@@ -192,12 +186,11 @@ class MainMenu {
                         if(playerNumber == 1) {
                             importParty(party1, playerNumber);
                             wantsToExportParty(party1, 1);
-                            playerNumber++;
                         }else {
                             importParty(party2, playerNumber);
                             wantsToExportParty(party2, 2);
-                            playerNumber++;
                         }
+                        playerNumber++;
                         break;
                     case 0:
                         mainMenu();
@@ -228,7 +221,7 @@ class MainMenu {
 
     }
 
-    private static void createOwnParty() throws IOException {
+    private static void createOwnParty() {
 
         ArrayList<Character> party = new ArrayList<>();
 
@@ -245,23 +238,21 @@ class MainMenu {
                 getsChoice(); //Gets the player choice and stores it in ch property
 
                 switch (ch) {
-                    case 1:
+                    case 1 -> {
                         Warrior warrior = new Warrior(); // CREATES NEW WARRIOR OBJECT WITH ONLY ID VALUE
                         warrior.customiseWarrior(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
                         party.add(warrior); // ADDS NEW WARRIOR TO PARTY
                         System.out.println("\nBrave new Warrior " + warrior.getName() + " joins the party! They have a HP of " + warrior.getHp() +
                                 ", a stamina of " + warrior.getStamina() + " and a strength of " + warrior.getStrength() + ".");
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         Wizard wizard = new Wizard(); // CREATES NEW WIZARD OBJECT WITH ONLY ID VALUE
                         wizard.customiseWizard(); // CALLS CUSTOMISE METHOD TO MANUALLY INPUT STATS
                         party.add(wizard); // ADDS NEW WARRIOR TO PARTY
                         System.out.println("\nWise old Wizard " + wizard.getName() + " joins the party! They have a HP of " + wizard.getHp() +
                                 ", a mana pool of " + wizard.getMana() + " and an intelligence of " + wizard.getIntelligence() + ".");
-                        break;
-                    default:
-                        System.out.println("Please, choose a valid number.\n");
-                        break;
+                    }
+                    default -> System.out.println("Please, choose a valid number.\n");
                 }
             }while(ch != 1 && ch != 2);
 
@@ -423,15 +414,13 @@ class MainMenu {
 
     //**** IMPORT PARTY FROM CSV FILE ***
     private static void importParty(ArrayList<Character> party, int n) {
-        List<Character> impCharacters = readFromCSV("ExportedParty"+n+".csv", n);
+        List<Character> impCharacters = readFromCSV(n);
 
-        for (Character c : impCharacters) {
-            party.add(c);
-        }
+        party.addAll(impCharacters);
     }
 
     //**** READ CSV FILE ****
-    private static List<Character> readFromCSV(String s, int n) {
+    private static List<Character> readFromCSV(int n) {
         List<Character> impCharacters = new ArrayList<>();
         Path path = Paths.get("ExportedParty"+n+".csv");
 
@@ -462,50 +451,38 @@ class MainMenu {
 
         //to ensure the same limits apply regardless of the data in the import file
         if (type == 2) {
-            if (hp >= 50 && hp <= 100) {
-                hp = hp;
-            } else if (hp < 50) {
+            if (hp < 50) {
                 hp = 50;
             } else {
                 hp = 100;
             }
         } else if(type == 1){
-            if (hp >= 100 && hp <= 200) {
-                hp = hp;
-            } else if (hp < 100) {
+             if (hp < 100) {
                 hp = 100;
             } else {
                 hp = 200;
             }
         }
 
-        if (mana >= 10 && mana <= 50) {
-            mana = mana;
-        } else if (mana < 10) {
+        if (mana < 10) {
             mana = 10;
         } else {
             mana = 50;
         }
 
-        if (intelligence >= 1 && intelligence <= 50) {
-            intelligence = intelligence;
-        } else if (intelligence < 1) {
+        if (intelligence < 1) {
             intelligence = 1;
         } else {
             intelligence = 50;
         }
 
-        if (stamina >= 10 && stamina <= 50) {
-            stamina = stamina;
-        } else if (stamina < 10) {
+        if (stamina < 10) {
             stamina = 10;
         } else {
             stamina = 50;
         }
 
-        if (strength >= 1 && strength <= 10) {
-            strength = strength;
-        } else if (strength < 1) {
+        if (strength < 1) {
             strength = 1;
         } else {
             strength = 10;
@@ -521,20 +498,20 @@ class MainMenu {
     //**** EXPORT PARTY TO CSV FILE ****
     public static void readToCSV(ArrayList<Character> party, int n) throws IOException {
         FileWriter writer = new FileWriter("ExportedParty"+n+".csv", false);
-        for(int r = 0; r < party.size(); r++){
-            String str = (party.get(r).toString());
-            if(str.contains("Warrior")){
-                str = str.replace("Warrior: ","");
-                str = str.replace("| HP:",",");
-                str = str.replace("| Stamina:",",");
-                str = str.replace("| Strength:",",");
+        for (Character character : party) {
+            String str = (character.toString());
+            if (str.contains("Warrior")) {
+                str = str.replace("Warrior: ", "");
+                str = str.replace("| HP:", ",");
+                str = str.replace("| Stamina:", ",");
+                str = str.replace("| Strength:", ",");
                 System.out.println(str);
-                str = "1,"+str;
-            } else if (str.contains("Wizard")){
-                str = str.replace("Wizard: ","");
-                str = str.replace("| HP: ",",");
-                str = str.replace("| Mana: ",",");
-                str = str.replace("| Intelligence: ",",");
+                str = "1," + str;
+            } else if (str.contains("Wizard")) {
+                str = str.replace("Wizard: ", "");
+                str = str.replace("| HP: ", ",");
+                str = str.replace("| Mana: ", ",");
+                str = str.replace("| Intelligence: ", ",");
                 str = "2," + str;
             }
             writer.append(str);

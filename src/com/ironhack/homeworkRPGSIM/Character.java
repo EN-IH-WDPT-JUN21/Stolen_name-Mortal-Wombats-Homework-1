@@ -1,6 +1,6 @@
 package com.ironhack.homeworkRPGSIM;
 
-abstract public class Character {
+abstract public class Character implements Attacker{
     UniqueID uniqueId = new UniqueID();
     protected int id = uniqueId.generateID();
     protected String name;
