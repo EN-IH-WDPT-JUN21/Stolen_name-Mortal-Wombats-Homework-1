@@ -67,14 +67,14 @@ class MainMenu {
 
             //Sends the user to the method chosen
             switch (ch) {
-                case 1 -> onePlayerGameMode();
-                case 2 -> {
+                case 1: onePlayerGameMode();
+                case 2: {
                     twoPlayerGameMode();
                 }
-                case 3 -> {
+                case 3: {
                     generateRandomGame();
                 }
-                default -> System.out.println("Please, choose a valid game mode.\n");
+                default: System.out.println("Please, choose a valid game mode.\n");
             }
         } while (ch != 1 && ch != 2 && ch != 3);
 
